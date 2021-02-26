@@ -55,7 +55,7 @@ func DetectVulnerabilityCustom(wg *sync.WaitGroup, host string, payload string, 
 		if err != nil {
 			return
 		}
-		if silent == true {
+		if silent == false {
 			if resp.StatusCode == 403 || resp.StatusCode == 401 {
 				red := color.New(color.FgRed, color.Bold).SprintFunc()
 				white := color.New(color.FgWhite, color.Bold).SprintFunc()
@@ -122,11 +122,13 @@ func DetectVulnerabilityCustom(wg *sync.WaitGroup, host string, payload string, 
 		}
 
 		bodyStr := string(bytes)
-		if resp.StatusCode == 403 || resp.StatusCode == 401 {
-			red := color.New(color.FgRed, color.Bold).SprintFunc()
-			white := color.New(color.FgWhite, color.Bold).SprintFunc()
-			fmt.Printf("[%s]  %s [%s]\n", red("WAF"), white(u.String()), white(http.StatusText(resp.StatusCode)))
-			return
+		if silent == false {
+			if resp.StatusCode == 403 || resp.StatusCode == 401 {
+				red := color.New(color.FgRed, color.Bold).SprintFunc()
+				white := color.New(color.FgWhite, color.Bold).SprintFunc()
+				fmt.Printf("[%s]  %s [%s]\n", red("WAF"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+				return
+			}
 		}
 		if strings.Contains(bodyStr, pattern) {
 
@@ -179,7 +181,7 @@ func DetectVulnerabilityWithTemplate(wg *sync.WaitGroup, payload string, templat
 		if err != nil {
 			return
 		}
-		if silent == true {
+		if silent == false {
 			if resp.StatusCode == 403 || resp.StatusCode == 401 {
 				red := color.New(color.FgRed, color.Bold).SprintFunc()
 				white := color.New(color.FgWhite, color.Bold).SprintFunc()
@@ -361,7 +363,7 @@ func DetectVulnerabilityWithTemplate(wg *sync.WaitGroup, payload string, templat
 		if err != nil {
 			return
 		}
-		if silent == true {
+		if silent == false {
 			if resp.StatusCode == 403 || resp.StatusCode == 401 {
 				red := color.New(color.FgRed, color.Bold).SprintFunc()
 				white := color.New(color.FgWhite, color.Bold).SprintFunc()

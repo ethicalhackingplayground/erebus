@@ -1,0 +1,9 @@
+request:
+   payloads: 
+      - "{{7*7}}foobar"
+
+   paths: false
+response:
+   statusCode: 200
+   patterns: 
+      - "49foobar"

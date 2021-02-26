@@ -10,10 +10,16 @@ import (
 
 // Yaml Contruct
 type YamlConfig struct {
+	Template struct {
+		Severity string `yaml:"severity"`
+		Author   string `yaml:"author"`
+	}
+
 	Request struct {
 		Payloads   []string `yaml:"payloads"`
 		Paths      string   `yaml:"paths"`
 		Parameters bool     `yaml:"parameters"`
+		Exclude    []string `yaml:"exclude"`
 	}
 	Response struct {
 		StatusCode int      `yaml:"statusCode"`

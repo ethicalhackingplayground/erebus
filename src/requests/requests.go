@@ -15,7 +15,9 @@ type Items struct {
 }
 
 type Item struct {
-	Url []string `xml:"url"`
+	Url     []string `xml:"url"`
+	Method  []string `xml:"method"`
+	Request []string `xml:"request"`
 }
 
 func ParseBurpFile(xmlfile string) (conf *Items) {

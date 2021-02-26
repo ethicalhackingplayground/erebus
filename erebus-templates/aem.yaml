@@ -1,0 +1,13 @@
+template:
+   severity: medium
+   author: "zoidsec"
+
+request:
+   payloads: 
+      - '/content/..;/crx/packmgr/index.jsp'
+
+   paths: true
+response:
+   statusCode: 200
+   patterns: 
+      - 'CRX Package Manager'

@@ -1,0 +1,13 @@
+request:
+   payloads: 
+      - '"><script>alert(1)</script>'
+
+   paths: false
+   parameters: true
+response:
+   statusCode: 200
+   patterns: 
+      - '"><script>alert(1)</script>'
+   header:
+      - text/json
+      - application/json

@@ -10,11 +10,12 @@ import (
 	"os"
 	"os/exec"
 	"regexp"
-	"src/requests"
-	"src/scan"
-	"src/yamlconf"
 	"strings"
 	"sync"
+
+	"github.com/ethicalhackingplayground/erebus/src/requests"
+	"github.com/ethicalhackingplayground/erebus/src/scan"
+	"github.com/ethicalhackingplayground/erebus/src/yamlconf"
 
 	"github.com/gocolly/colly/v2"
 	"github.com/projectdiscovery/gologger"

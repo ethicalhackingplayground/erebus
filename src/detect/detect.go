@@ -9,8 +9,9 @@ import (
 	"net/url"
 	"os"
 	"os/exec"
-	"src/yamlconf"
 	"strings"
+
+	"github.com/ethicalhackingplayground/erebus/src/yamlconf"
 
 	"github.com/fatih/color"
 	"github.com/gocolly/colly/v2"

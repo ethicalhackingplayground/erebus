@@ -30,7 +30,7 @@ We have a [dedicated repository](https://github.com/ethicalhackingplayground/ere
 </h3>
 
 
-# Install Nuclei
+# Install Erebus
 
 ```sh
 ▶ GO111MODULE=on go get -v github.com/ethicalhackingplayground/erebus/tree/main/src

@@ -4,9 +4,10 @@ import (
 	"flag"
 	"math/rand"
 	"runtime"
-	"src/banner"
-	"src/run"
 	"time"
+
+	"github.com/ethicalhackingplayground/erebus/src/banner"
+	"github.com/ethicalhackingplayground/erebus/src/run"
 
 	"github.com/projectdiscovery/gologger"
 )

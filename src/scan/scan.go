@@ -2,8 +2,9 @@ package scan
 
 import (
 	"net/http"
-	"src/detect"
-	"src/yamlconf"
+
+	"github.com/ethicalhackingplayground/erebus/src/detect"
+	"github.com/ethicalhackingplayground/erebus/src/yamlconf"
 
 	"github.com/gocolly/colly/v2"
 )

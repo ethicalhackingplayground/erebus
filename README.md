@@ -3,7 +3,7 @@
 <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/d06120c6-10fa-49a6-8e5a-6de6024c71b5/ddaf69q-cbe86b59-8049-40b6-96ca-bb1929a0b073.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2QwNjEyMGM2LTEwZmEtNDlhNi04ZTVhLTZkZTYwMjRjNzFiNVwvZGRhZjY5cS1jYmU4NmI1OS04MDQ5LTQwYjYtOTZjYS1iYjE5MjlhMGIwNzMuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.n65EW1oBAX5Uc1gs3SvkpXvS-3Tc1uaP7BRVhSj04DE" width="200px" alt="Erebus">
 </h1>
 
-<h4 align="center">Fast and customisable vulnerability scanner based on simple YAML based DSL.</h4>
+<h4 align="center">Fast and customisable parameter based vulnerability scanner based on simple YAML Rules</h4>
 
 
 <p align="center">

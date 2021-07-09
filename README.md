@@ -62,7 +62,7 @@ type in **127.0.0.1** in HTTP Proxy then for the port type in **8080** make sure
 <tr>
 <td> 
 
-## Install the SSL Certificates to use TLS
+## Install the SSL Certificates to use HTTPS
 
 I have provided the certificates for you to use for **HTTPS** testing, all you need to do is install these by:
 

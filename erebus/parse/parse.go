@@ -6,8 +6,8 @@ import (
 	"runtime"
 	"time"
 
-	"github.com/ethicalhackingplayground/erebus/src/erebus/banner"
-	"github.com/ethicalhackingplayground/erebus/src/erebus/run"
+	"github.com/ethicalhackingplayground/erebus/erebus/banner"
+	"github.com/ethicalhackingplayground/erebus/erebus/run"
 
 	"github.com/projectdiscovery/gologger"
 )

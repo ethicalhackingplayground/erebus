@@ -13,9 +13,9 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/ethicalhackingplayground/erebus/src/erebus/requests"
-	"github.com/ethicalhackingplayground/erebus/src/erebus/scan"
-	"github.com/ethicalhackingplayground/erebus/src/erebus/yamlconf"
+	"github.com/ethicalhackingplayground/erebus/erebus/requests"
+	"github.com/ethicalhackingplayground/erebus/erebus/scan"
+	"github.com/ethicalhackingplayground/erebus/erebus/yamlconf"
 
 	"github.com/gocolly/colly/v2"
 	"github.com/projectdiscovery/gologger"

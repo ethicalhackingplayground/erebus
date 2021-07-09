@@ -2,7 +2,6 @@ module github.com/ethicalhackingplayground/erebus/src latest
 
 go 1.16
 
-
 require(
     github.com/fatih/color
     github.com/projectdiscovery/gologger

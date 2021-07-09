@@ -30,23 +30,10 @@ We have a [dedicated repository](https://github.com/ethicalhackingplayground/ere
 </h3>
 
 
-<<<<<<< HEAD
 ## Install Erebus Binary
 
 ```sh
-▶  GO111MODULE=on go get -u -v github.com/ethicalhackingplayground/erebus/erebus
-=======
-# Install Erebus Binary
-
-```sh
-▶  GO111MODULE=on go get -u -v github.com/ethicalhackingplayground/erebus/erebus
-```
-
-# Install Erebus From Github
-
-```sh
-▶  git clone https://github.com/ethicalhackingplayground/erebus ; cd erebus/erebus; go build ; sudo cp erebus /bin
->>>>>>> main
+▶  GO111MODULE=on go get -u -v github.com/ethicalhackingplayground/erebus/v1
 ```
 
 ## Install Erebus From Github

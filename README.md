@@ -33,7 +33,7 @@ We have a [dedicated repository](https://github.com/ethicalhackingplayground/ere
 # Install Erebus
 
 ```sh
-▶ GO111MODULE=on go get -v github.com/ethicalhackingplayground/erebus
+▶ GO111MODULE=on go get -v github.com/ethicalhackingplayground/erebus/erebus
 ```
 
 <table>

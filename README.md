@@ -26,7 +26,7 @@ We have a [dedicated repository](https://github.com/ethicalhackingplayground/ere
 
 
 <h3 align="center">
-  <img src="static/yaml.jpg" alt="yaml-templates-flow" width="700px"></a>
+  <img src="static/yaml.png" alt="yaml-templates-flow" width="700px"></a>
 </h3>
 
 
@@ -103,5 +103,5 @@ Scanning for XSS vulnerabilities using the intercepting proxy while crawling.
 Erebus is distributed under [GPL-3.0 License](https://github.com/ethicalhackingplayground/erebus/blob/main/LICENSE)
 
 <h1 align="left">
-  <a href="https://discord.gg/MQWCem5b"><img src="static/Join-Discord.png" width="380" alt="Join Discord"></a> <a href="https://nuclei.projectdiscovery.io"><img src="static/check-nuclei-documentation.png" width="380" alt="Check Nuclei Documentation"></a>
+  <a href="https://discord.gg/MQWCem5b"><img src="static/Join-Discord.png" width="380" alt="Join Discord"></a>
 </h1>

@@ -11,7 +11,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/ethicalhackingplayground/src/erebus/yamlconf"
+	"github.com/ethicalhackingplayground/erebus/src/erebus/yamlconf"
 
 	"github.com/fatih/color"
 	"github.com/gocolly/colly/v2"

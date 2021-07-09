@@ -7,8 +7,8 @@ GOGET=$(GOCMD) get
     
 all: build
 build:
-		$(GOBUILD) -v -ldflags="-extldflags=-static" -o "erebus" main.go
+		sudo $(GOBUILD) -v -ldflags="-extldflags=-static" -o "erebus" main.go
 test: 
-		$(GOTEST) -v ./...
+		sudo $(GOTEST) -v ./...
 tidy:
-		$(GOMOD) tidy
+		sudo $(GOMOD) tidy

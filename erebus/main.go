@@ -1,11 +1,12 @@
 package main
 
 import (
-	"github.com/ethicalhackingplayground/erebus/v1/banner"
-	"github.com/ethicalhackingplayground/erebus/v1/parse"
 	"os"
 	"os/signal"
 	"syscall"
+
+	"github.com/ethicalhackingplayground/erebus/erebus/banner"
+	"github.com/ethicalhackingplayground/erebus/erebus/parse"
 )
 
 func main() {

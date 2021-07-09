@@ -1,10 +1,10 @@
 package main
 
 import (
+	"github.com/ethicalhackingplayground/erebus/src/banner"
+	"github.com/ethicalhackingplayground/erebus/src/parse"
 	"os"
 	"os/signal"
-	"src/banner"
-	"src/parse"
 	"syscall"
 )
 

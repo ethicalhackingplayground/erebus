@@ -5,8 +5,8 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/ethicalhackingplayground/erebus/erebus/banner"
-	"github.com/ethicalhackingplayground/erebus/erebus/parse"
+	"github.com/ethicalhackingplayground/src/erebus/banner"
+	"github.com/ethicalhackingplayground/src/erebus/parse"
 )
 
 func main() {

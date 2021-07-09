@@ -30,11 +30,50 @@ We have a [dedicated repository](https://github.com/ethicalhackingplayground/ere
 </h3>
 
 
-# Install Erebus
+## Install Erebus Binary
 
 ```sh
-▶ GO111MODULE=on go get -v github.com/ethicalhackingplayground/erebus
+▶  GO111MODULE=on go get -u -v github.com/ethicalhackingplayground/erebus/erebus
 ```
+
+## Install Erebus From Github
+
+```sh
+▶  git clone https://github.com/ethicalhackingplayground/erebus ; cd erebus/erebus ; go build ; sudo cp erebus /bin
+```
+
+<table>
+<tr>
+<td>  
+
+## Setting up the Erebus Interceptor
+
+Make sure to setup a proxy in your browser before you use the **erebus interceptor** for firefox go to 
+
+▶ Settings ▶ General ▶ Network Settings ▶ Manual proxy configuration
+
+type in **127.0.0.1** in HTTP Proxy then for the port type in **8080** make sure to enable **Also use this proxy for FTP and HTTPS**
+
+</td>
+</tr>
+</table>
+
+<table>
+<tr>
+<td> 
+
+## Install the SSL Certificates to use TLS
+
+I have provided the certificates for you to use for **HTTPS** testing, all you need to do is install these by:
+
+▶ Settings ▶ Privacy & Security ▶ Certificates ▶ View Certificates ▶ Import ▶ 
+
+Select the **.crt** file in the erebus directory and proceed by trusting and installing.
+
+</td>
+</tr>
+</table>
+
 
 <table>
 <tr>

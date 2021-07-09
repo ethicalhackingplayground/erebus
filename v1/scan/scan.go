@@ -3,8 +3,8 @@ package scan
 import (
 	"net/http"
 
-	"github.com/ethicalhackingplayground/erebus/erebus/detect"
-	"github.com/ethicalhackingplayground/erebus/erebus/yamlconf"
+	"github.com/ethicalhackingplayground/erebus/v1/detect"
+	"github.com/ethicalhackingplayground/erebus/v1/yamlconf"
 
 	"github.com/gocolly/colly/v2"
 )

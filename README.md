@@ -18,7 +18,7 @@
 
 Erebus is used to test every parameter across targets based on Yaml templates leading to zero false positives and providing fast scanning on large number of hosts. Erebus offers many useful features including an intercepting proxy which allows researchers to browse the web, click on links and erebus will test every parameter that passes through the proxy.
 
-We have a [dedicated repository](https://github.com/ethicalhackingplayground/erebus/erebus-templates) that houses various types of vulnerability templates.
+We have a [dedicated repository](https://github.com/ethicalhackingplayground/erebus/tree/main/erebus-templates) that houses various types of vulnerability templates.
 
 
 

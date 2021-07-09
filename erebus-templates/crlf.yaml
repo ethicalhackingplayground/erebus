@@ -1,3 +1,7 @@
+template:
+   severity: info
+   author: "zoidsec"
+
 request:
    payloads: 
       - "%0D%0ASet-Cookie:mycookie=myvalue"

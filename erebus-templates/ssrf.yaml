@@ -1,11 +1,14 @@
+template:
+   severity: info
+   author: "zoidsec"
+
 request:
    payloads: 
-      - http://{{burp-collab}}
-      - https://{{burp-collab}}
+      - http://zsvsszmbku3xldyywzg1jc0nkeq6ev.burpcollaborator.net
 
    paths: false
 response:
    statusCode: 200
    patterns: 
-      - "ssrf has been found!!!"
-      - "ssrf has been found!!!"
+      - lszm4qbbva85dqtcuv393czjkgz
+

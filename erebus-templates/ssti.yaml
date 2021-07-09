@@ -1,3 +1,7 @@
+template:
+   severity: high
+   author: "zoidsec"
+
 request:
    payloads: 
       - "{{7*7}}foobar"

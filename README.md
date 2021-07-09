@@ -36,8 +36,6 @@ We have a [dedicated repository](https://github.com/ethicalhackingplayground/ere
 ▶  GO111MODULE=on go get -u -v github.com/ethicalhackingplayground/erebus/v1
 ```
 
-# Install Erebus Binary
-
 ## Install Erebus From Github
 
 ```sh

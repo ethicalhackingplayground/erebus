@@ -39,7 +39,7 @@ We have a [dedicated repository](https://github.com/ethicalhackingplayground/ere
 # Install Erebus From Github
 
 ```sh
-▶  git clone https://github.com/ethicalhackingplayground/erebus ; cd erebus/erebus; go build ; cp erebus /bin
+▶  git clone https://github.com/ethicalhackingplayground/erebus ; cd erebus/erebus; go build ; sudo cp erebus /bin
 ```
 
 <table>

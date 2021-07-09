@@ -1,8 +1,30 @@
-module github.com/ethicalhackingplayground/erebus latest
+module github.com/ethicalhackingplayground/erebus
 
 go 1.13
 
 require (
+	github.com/elazarl/goproxy v0.0.0-20210110162100-a92cc753f88e // indirect
+	github.com/elazarl/goproxy/ext v0.0.0-20210110162100-a92cc753f88e // indirect
+	github.com/elazarl/goproxy v0.0.0-20210110162100-a92cc753f88e // indirect
+	github.com/elazarl/goproxy/ext v0.0.0-20210110162100-a92cc753f88e // indirect
+	github.com/elazarl/goproxy v0.0.0-20210110162100-a92cc753f88e // indirect
+	github.com/elazarl/goproxy/ext v0.0.0-20210110162100-a92cc753f88e // indirect
+	github.com/elazarl/goproxy v0.0.0-20210110162100-a92cc753f88e // indirect
+	github.com/elazarl/goproxy/ext v0.0.0-20210110162100-a92cc753f88e // indirect
+	github.com/elazarl/goproxy v0.0.0-20210110162100-a92cc753f88e // indirect
+	github.com/elazarl/goproxy/ext v0.0.0-20210110162100-a92cc753f88e // indirect
+	github.com/elazarl/goproxy v0.0.0-20210110162100-a92cc753f88e // indirect
+	github.com/elazarl/goproxy/ext v0.0.0-20210110162100-a92cc753f88e // indirect
+	github.com/elazarl/goproxy v0.0.0-20210110162100-a92cc753f88e // indirect
+	github.com/elazarl/goproxy/ext v0.0.0-20210110162100-a92cc753f88e // indirect
+	github.com/elazarl/goproxy v0.0.0-20210110162100-a92cc753f88e // indirect
+	github.com/elazarl/goproxy/ext v0.0.0-20210110162100-a92cc753f88e // indirect
+	github.com/elazarl/goproxy v0.0.0-20210110162100-a92cc753f88e // indirect
+	github.com/elazarl/goproxy/ext v0.0.0-20210110162100-a92cc753f88e // indirect
+	github.com/elazarl/goproxy v0.0.0-20210110162100-a92cc753f88e // indirect
+	github.com/elazarl/goproxy/ext v0.0.0-20210110162100-a92cc753f88e // indirect
+	github.com/elazarl/goproxy v0.0.0-20210110162100-a92cc753f88e // indirect
+	github.com/elazarl/goproxy/ext v0.0.0-20210110162100-a92cc753f88e // indirect
 	github.com/fatih/color v1.12.0
 	github.com/gocolly/colly/v2 v2.1.0
 	github.com/projectdiscovery/gologger v1.1.4

@@ -1,10 +1,10 @@
-module github.com/ethicalhackingplayground/erebus/src latest
+module github.com/ethicalhackingplayground/erebus
 
 go 1.16
 
 require(
-    github.com/fatih/color v1.12.0
-    github.com/projectdiscovery/gologger v1.1.4
-    github.com/gocolly/colly v2.1.0
-    gopkg.in/elazarl/goproxy v1.1.0
+    github.com/fatih/color
+    github.com/projectdiscovery/gologger
+    github.com/gocolly/colly/v2
+    gopkg.in/elazarl/goproxy.v1
 )

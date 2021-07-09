@@ -33,7 +33,7 @@ We have a [dedicated repository](https://github.com/ethicalhackingplayground/ere
 # Install Nuclei
 
 ```sh
-▶ GO111MODULE=on go get -v github.com/ethicalhackingplayground/erebus/src
+▶ GO111MODULE=on go get -v github.com/ethicalhackingplayground/erebus/tree/main/src
 ```
 
 <table>

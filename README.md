@@ -90,13 +90,15 @@ Usage of ./erebus:
 
 </details>
 
-### Running Nuclei
+### Running Erebus
 
 Scanning for XSS vulnerabilities using the intercepting proxy while crawling.
 
 ```sh
 ▶ erebus -t erebus-templates/xss-reflected.yaml -interceptor -crawl -secure
 ```
+
+[![asciicast](https://asciinema.org/a/424487.svg)](https://asciinema.org/a/424487)
 
 ### License
 

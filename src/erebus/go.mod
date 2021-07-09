@@ -1,4 +1,4 @@
-module github.com/ethicalhackingplayground/src latest
+module github.com/ethicalhackingplayground/src/erebus latest
 
 go 1.13
 

@@ -84,10 +84,63 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 				white(config.Template.Description), yellow(config.Template.Author), info(config.Template.Severity))
 			break
 		}
-		fmt.Println("")
+		fmt.Println("\n")
 	} else {
-		gologger.Error().Msg("Erebus only supports a single template for now.")
-		return
+
+		if interceptor == true {
+			gologger.Error().Msg("Erebus does not support multiple templates for interception.")
+			return
+		}
+
+		// Valide the path
+		dirName := yamlconf.ValidatePath(templates)
+		files, err := ioutil.ReadDir(dirName)
+		if err != nil {
+			gologger.Error().Msg(err.Error())
+		}
+
+		for j := 0; j < len(files); j++ {
+
+			red := color.New(color.FgRed, color.Bold).SprintFunc()
+			yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
+			normal := color.New(color.FgMagenta, color.Bold).SprintFunc()
+			medium := color.New(color.FgYellow, color.Bold).SprintFunc()
+			low := color.New(color.FgGreen, color.Bold).SprintFunc()
+			info := color.New(color.FgBlue, color.Bold).SprintFunc()
+			white := color.New(color.FgWhite, color.Bold).SprintFunc()
+
+			// Read and parse the payloads from the templates
+			config := yamlconf.ReadTemplates(dirName + files[j].Name())
+
+			switch config.Template.Severity {
+			case "critical":
+				fmt.Printf("[%s] %s (%s) [%s]",
+					info(config.Template.Name),
+					white(config.Template.Description), yellow(config.Template.Author), red(config.Template.Severity))
+				break
+			case "high":
+				fmt.Printf("[%s] %s (%s) [%s]",
+					info(config.Template.Name),
+					white(config.Template.Description), yellow(config.Template.Author), normal(config.Template.Severity))
+				break
+			case "medium":
+				fmt.Printf("[%s] %s (%s) [%s]",
+					info(config.Template.Name),
+					white(config.Template.Description), yellow(config.Template.Author), medium(config.Template.Severity))
+				break
+			case "low":
+				fmt.Printf("[%s] %s (%s) [%s]",
+					info(config.Template.Name),
+					white(config.Template.Description), yellow(config.Template.Author), low(config.Template.Severity))
+				break
+			case "info":
+				fmt.Printf("[%s] %s (%s) [%s]",
+					info(config.Template.Name),
+					white(config.Template.Description), yellow(config.Template.Author), info(config.Template.Severity))
+				break
+			}
+			fmt.Println("\n")
+		}
 	}
 
 	// Check the conditions to see if we are using the templates or single payloads
@@ -96,7 +149,6 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 		// Intercetor is turned on
 		if interceptor == true {
 
-			fmt.Println("\n")
 			gologger.Info().Msgf("Proxy started on : %s\n\n", proxyPort)
 
 			// Read and parse the payloads from the templates
@@ -451,9 +503,28 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 			http.ListenAndServe(":"+proxyPort, proxy)
 
 		} else {
+
+			// Crawling is enabled
+			c := colly.NewCollector(
+				colly.AllowedDomains(scope),
+				colly.MaxDepth(depth),
+			)
+
+			// The visited links
+			visited := []string{}
+
 			if parseBurp != "" {
 
+				// Load the templates
+				fi, err := os.Stat(templates)
+				if err != nil {
+					return
+				}
+
+				mode := fi.Mode()
+
 				if mode.IsDir() {
+
 					// Valide the path
 					dirName := yamlconf.ValidatePath(templates)
 					files, err := ioutil.ReadDir(dirName)
@@ -469,12 +540,96 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 
 						hosts := make(chan string)
 
+						if crawl == true {
+
+							payloadList := []string{}
+
+							// Find and visit all links
+							c.OnHTML("a[href]", func(e *colly.HTMLElement) {
+								link := e.Attr("href")
+								e.Request.Visit(e.Request.AbsoluteURL(link))
+							})
+
+							// The request of each link visisted
+							c.OnRequest(func(r *colly.Request) {
+								if config.Request.Parameters == true {
+
+									// Check if the Url contains parameters
+									params, _ := url.Parse(r.URL.String())
+									if len(params.Query()) > 0 {
+
+										// Only visit inscope items once
+										if strings.ContainsAny(r.URL.String(), scope) &&
+											!Contains(visited, r.URL.String()) &&
+											!Contains(config.Request.Exclude, r.URL.String()) {
+
+											if tool != "" {
+
+												// If command is specified then run it first
+												cmd := exec.Command("/bin/bash", "-c", "echo "+r.URL.String()+" | "+tool)
+												cmdReader, _ := cmd.StdoutPipe()
+
+												scanner := bufio.NewScanner(cmdReader)
+
+												for scanner.Scan() {
+
+													// Keep track of visited URL(s)
+													visited = append(visited, scanner.Text())
+
+												}
+												// Crawl and scan
+												scan.CrawlAndScan(r, payloadList, template, *config, silent, out)
+
+											} else {
+												// Crawl and scan
+												scan.CrawlAndScan(r, payloadList, template, *config, silent, out)
+											}
+										}
+									}
+
+								} else {
+
+									// Only visit inscope items once
+									if strings.ContainsAny(r.URL.String(), scope) &&
+										!Contains(visited, r.URL.String()) &&
+										!Contains(config.Request.Exclude, r.URL.String()) {
+										if tool != "" {
+
+											// If command is specified then run it first
+											cmd := exec.Command("/bin/bash", "-c", "echo "+r.URL.String()+" | "+tool)
+											cmdReader, _ := cmd.StdoutPipe()
+
+											scanner := bufio.NewScanner(cmdReader)
+
+											for scanner.Scan() {
+
+												// Keep track of visited URL(s)
+												visited = append(visited, scanner.Text())
+
+											}
+											// Crawl and scan
+											scan.CrawlAndScan(r, payloadList, template, *config, silent, out)
+
+										} else {
+											// Crawl and scan
+											scan.CrawlAndScan(r, payloadList, template, *config, silent, out)
+										}
+									}
+								}
+
+							})
+
+						}
+
 						// Use parallelism to speed up the processing
 						for i := 0; i < threads; i++ {
 							wg.Add(1)
 							go func() {
 								for url := range hosts {
-									scan.ScanBurpXmlWithTemplates(*config, url, config.Request.Payloads, silent, templates, out, tool)
+									scan.ScanBurpXmlWithTemplates(*config, url, config.Request.Payloads, silent, template, out, tool)
+									if crawl == true {
+										c.Visit(url)
+									}
 								}
 								wg.Done()
 
@@ -496,6 +651,87 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 					// Define the hosts channel
 					hosts := make(chan string)
 
+					if crawl == true {
+
+						payloadList := []string{}
+
+						// Find and visit all links
+						c.OnHTML("a[href]", func(e *colly.HTMLElement) {
+							link := e.Attr("href")
+							e.Request.Visit(e.Request.AbsoluteURL(link))
+						})
+
+						// The request of each link visisted
+						c.OnRequest(func(r *colly.Request) {
+							if config.Request.Parameters == true {
+
+								// Check if the Url contains parameters
+								params, _ := url.Parse(r.URL.String())
+								if len(params.Query()) > 0 {
+
+									// Only visit inscope items once
+									if strings.ContainsAny(r.URL.String(), scope) &&
+										!Contains(visited, r.URL.String()) &&
+										!Contains(config.Request.Exclude, r.URL.String()) {
+
+										if tool != "" {
+
+											// If command is specified then run it first
+											cmd := exec.Command("/bin/bash", "-c", "echo "+r.URL.String()+" | "+tool)
+											cmdReader, _ := cmd.StdoutPipe()
+
+											scanner := bufio.NewScanner(cmdReader)
+
+											for scanner.Scan() {
+
+												// Keep track of visited URL(s)
+												visited = append(visited, scanner.Text())
+
+											}
+											// Crawl and scan
+											scan.CrawlAndScan(r, payloadList, templates, *config, silent, out)
+
+										} else {
+											// Crawl and scan
+											scan.CrawlAndScan(r, payloadList, templates, *config, silent, out)
+										}
+									}
+								}
+
+							} else {
+
+								// Only visit inscope items once
+								if strings.ContainsAny(r.URL.String(), scope) &&
+									!Contains(visited, r.URL.String()) &&
+									!Contains(config.Request.Exclude, r.URL.String()) {
+									if tool != "" {
+
+										// If command is specified then run it first
+										cmd := exec.Command("/bin/bash", "-c", "echo "+r.URL.String()+" | "+tool)
+										cmdReader, _ := cmd.StdoutPipe()
+
+										scanner := bufio.NewScanner(cmdReader)
+
+										for scanner.Scan() {
+
+											// Keep track of visited URL(s)
+											visited = append(visited, scanner.Text())
+
+										}
+										// Crawl and scan
+										scan.CrawlAndScan(r, payloadList, templates, *config, silent, out)
+
+									} else {
+										// Crawl and scan
+										scan.CrawlAndScan(r, payloadList, templates, *config, silent, out)
+									}
+								}
+							}
+
+						})
+
+					}
+
 					// Use parallelism to speed up the processing
 					for i := 0; i < threads; i++ {
 						wg.Add(1)
@@ -503,6 +739,9 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 							for url := range hosts {
 								// Scan using burps XML file
 								scan.ScanBurpXmlWithTemplates(*config, url, config.Request.Payloads, silent, templates, out, tool)
+								if crawl == true {
+									c.Visit(url)
+								}
 							}
 							wg.Done()
 						}()
@@ -516,44 +755,266 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 				}
 			} else {
 
-				// Read and parse the payloads from the templates
-				config := yamlconf.ReadTemplates(templates)
-				payloadList := []string{}
-				hosts := make(chan string)
-				numPayloads := len(config.Request.Payloads)
-				for i := 0; i < numPayloads; i++ {
-					payloadList = append(payloadList, config.Request.Payloads[i])
+				// Load the templates
+				fi, err := os.Stat(templates)
+				if err != nil {
+					return
 				}
 
-				// Use parallelism to speed up the processing
-				for i := 0; i < threads; i++ {
-					wg.Add(1)
-					go func() {
-						for url := range hosts {
-							scan.ScanHostsWithTemplates(*config, url, payloadList, silent, templates, out, tool, interceptor)
-						}
-						wg.Done()
-					}()
-				}
+				mode := fi.Mode()
+				if mode.IsDir() {
 
-				// Iterate over Stdin and parse the parameters to test.
-				uScanner := bufio.NewScanner(os.Stdin)
-				for uScanner.Scan() {
+					// Valide the path
+					dirName := yamlconf.ValidatePath(templates)
+					files, err := ioutil.ReadDir(dirName)
+					if err != nil {
+						gologger.Error().Msg(err.Error())
+					}
 
-					if config.Request.Parameters == true {
-						u, err := url.Parse(uScanner.Text())
-						if err != nil {
-							return
+					for j := 0; j < len(files); j++ {
+
+						// Read and parse the payloads from the templates
+						template := dirName + files[j].Name()
+						config := yamlconf.ReadTemplates(template)
+						payloadList := []string{}
+						hosts := make(chan string)
+						numPayloads := len(config.Request.Payloads)
+						for i := 0; i < numPayloads; i++ {
+							payloadList = append(payloadList, config.Request.Payloads[i])
 						}
-						if len(u.Query()) > 0 {
+
+						if crawl == true {
+							// Find and visit all links
+							c.OnHTML("a[href]", func(e *colly.HTMLElement) {
+								link := e.Attr("href")
+								e.Request.Visit(e.Request.AbsoluteURL(link))
+							})
+
+							// The request of each link visisted
+							c.OnRequest(func(r *colly.Request) {
+								if config.Request.Parameters == true {
+
+									// Check if the Url contains parameters
+									params, _ := url.Parse(r.URL.String())
+									if len(params.Query()) > 0 {
+
+										// Only visit inscope items once
+										if strings.ContainsAny(r.URL.String(), scope) &&
+											!Contains(visited, r.URL.String()) &&
+											!Contains(config.Request.Exclude, r.URL.String()) {
+
+											if tool != "" {
+
+												// If command is specified then run it first
+												cmd := exec.Command("/bin/bash", "-c", "echo "+r.URL.String()+" | "+tool)
+												cmdReader, _ := cmd.StdoutPipe()
+
+												scanner := bufio.NewScanner(cmdReader)
+
+												for scanner.Scan() {
+
+													// Keep track of visited URL(s)
+													visited = append(visited, scanner.Text())
+
+												}
+												// Crawl and scan
+												scan.CrawlAndScan(r, payloadList, template, *config, silent, out)
+
+											} else {
+												// Crawl and scan
+												scan.CrawlAndScan(r, payloadList, template, *config, silent, out)
+											}
+										}
+									}
+
+								} else {
+
+									// Only visit inscope items once
+									if strings.ContainsAny(r.URL.String(), scope) &&
+										!Contains(visited, r.URL.String()) &&
+										!Contains(config.Request.Exclude, r.URL.String()) {
+										if tool != "" {
+
+											// If command is specified then run it first
+											cmd := exec.Command("/bin/bash", "-c", "echo "+r.URL.String()+" | "+tool)
+											cmdReader, _ := cmd.StdoutPipe()
+
+											scanner := bufio.NewScanner(cmdReader)
+
+											for scanner.Scan() {
+
+												// Keep track of visited URL(s)
+												visited = append(visited, scanner.Text())
+
+											}
+											// Crawl and scan
+											scan.CrawlAndScan(r, payloadList, template, *config, silent, out)
+
+										} else {
+											// Crawl and scan
+											scan.CrawlAndScan(r, payloadList, template, *config, silent, out)
+										}
+									}
+								}
+
+							})
+
+						}
+
+						// Use parallelism to speed up the processing
+						for i := 0; i < threads; i++ {
+							wg.Add(1)
+							go func() {
+								for url := range hosts {
+									scan.ScanHostsWithTemplates(*config, url, payloadList, silent, template, out, tool, interceptor)
+									if crawl == true {
+										c.Visit(url)
+									}
+								}
+								wg.Done()
+							}()
+						}
+
+						// Iterate over Stdin and parse the parameters to test.
+						uScanner := bufio.NewScanner(os.Stdin)
+						for uScanner.Scan() {
+
+							if config.Request.Parameters == true {
+								u, err := url.Parse(uScanner.Text())
+								if err != nil {
+									return
+								}
+								if len(u.Query()) > 0 {
+									hosts <- uScanner.Text()
+								}
+							} else {
+								hosts <- uScanner.Text()
+							}
+						}
+						close(hosts)
+						wg.Wait()
+					}
+				} else {
+					config := yamlconf.ReadTemplates(templates)
+					payloadList := []string{}
+					hosts := make(chan string)
+					numPayloads := len(config.Request.Payloads)
+					for i := 0; i < numPayloads; i++ {
+						payloadList = append(payloadList, config.Request.Payloads[i])
+					}
+
+					if crawl == true {
+
+						// Find and visit all links
+						c.OnHTML("a[href]", func(e *colly.HTMLElement) {
+							link := e.Attr("href")
+							e.Request.Visit(e.Request.AbsoluteURL(link))
+						})
+
+						// The request of each link visisted
+						c.OnRequest(func(r *colly.Request) {
+							if config.Request.Parameters == true {
+
+								// Check if the Url contains parameters
+								params, _ := url.Parse(r.URL.String())
+								if len(params.Query()) > 0 {
+
+									// Only visit inscope items once
+									if strings.ContainsAny(r.URL.String(), scope) &&
+										!Contains(visited, r.URL.String()) &&
+										!Contains(config.Request.Exclude, r.URL.String()) {
+
+										if tool != "" {
+
+											// If command is specified then run it first
+											cmd := exec.Command("/bin/bash", "-c", "echo "+r.URL.String()+" | "+tool)
+											cmdReader, _ := cmd.StdoutPipe()
+
+											scanner := bufio.NewScanner(cmdReader)
+
+											for scanner.Scan() {
+
+												// Keep track of visited URL(s)
+												visited = append(visited, scanner.Text())
+
+											}
+											// Crawl and scan
+											scan.CrawlAndScan(r, payloadList, templates, *config, silent, out)
+
+										} else {
+											// Crawl and scan
+											scan.CrawlAndScan(r, payloadList, templates, *config, silent, out)
+										}
+									}
+								}
+
+							} else {
+
+								// Only visit inscope items once
+								if strings.ContainsAny(r.URL.String(), scope) &&
+									!Contains(visited, r.URL.String()) &&
+									!Contains(config.Request.Exclude, r.URL.String()) {
+									if tool != "" {
+
+										// If command is specified then run it first
+										cmd := exec.Command("/bin/bash", "-c", "echo "+r.URL.String()+" | "+tool)
+										cmdReader, _ := cmd.StdoutPipe()
+
+										scanner := bufio.NewScanner(cmdReader)
+
+										for scanner.Scan() {
+
+											// Keep track of visited URL(s)
+											visited = append(visited, scanner.Text())
+
+										}
+										// Crawl and scan
+										scan.CrawlAndScan(r, payloadList, templates, *config, silent, out)
+
+									} else {
+										// Crawl and scan
+										scan.CrawlAndScan(r, payloadList, templates, *config, silent, out)
+									}
+								}
+							}
+
+						})
+
+					}
+
+					// Use parallelism to speed up the processing
+					for i := 0; i < threads; i++ {
+						wg.Add(1)
+						go func() {
+							for url := range hosts {
+								scan.ScanHostsWithTemplates(*config, url, payloadList, silent, templates, out, tool, interceptor)
+								if crawl == true {
+									c.Visit(url)
+								}
+							}
+							wg.Done()
+						}()
+					}
+
+					// Iterate over Stdin and parse the parameters to test.
+					uScanner := bufio.NewScanner(os.Stdin)
+					for uScanner.Scan() {
+
+						if config.Request.Parameters == true {
+							u, err := url.Parse(uScanner.Text())
+							if err != nil {
+								return
+							}
+							if len(u.Query()) > 0 {
+								hosts <- uScanner.Text()
+							}
+						} else {
 							hosts <- uScanner.Text()
 						}
-					} else {
-						hosts <- uScanner.Text()
 					}
+					close(hosts)
+					wg.Wait()
 				}
-				close(hosts)
-				wg.Wait()
 			}
 		}
 	}

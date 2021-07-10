@@ -54,6 +54,10 @@ We have a [dedicated repository](https://github.com/ethicalhackingplayground/ere
 </tr>
 </table>
 
+<table>
+<tr>
+<td>  
+
 ## Setup Erebus Interceptor
 
 Make sure to setup a proxy in your browser before you use the **erebus interceptor** for firefox go to 

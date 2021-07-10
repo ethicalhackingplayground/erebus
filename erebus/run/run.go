@@ -40,7 +40,6 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 	// Load the templates
 	fi, err := os.Stat(templates)
 	if err != nil {
-		gologger.Error().Msg("Erebus only supports a single template for now.")
 		return
 	}
 
@@ -86,6 +85,9 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 			break
 		}
 		fmt.Println("")
+	} else {
+		gologger.Error().Msg("Erebus only supports a single template for now.")
+		return
 	}
 
 	// Check the conditions to see if we are using the templates or single payloads

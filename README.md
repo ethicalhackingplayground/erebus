@@ -39,6 +39,11 @@ We have a [dedicated repository](https://github.com/ethicalhackingplayground/ere
 </h3>
 
 
+<table>
+<tr>
+<td>  
+
+
 ### Install Erebus
 
 ```sh
@@ -132,13 +137,42 @@ Usage of ./erebus:
 
 </details>
 
-### Running Erebus
+### Install Templates
 
-Scanning for XSS vulnerabilities using the intercepting proxy while crawling.
+```sh
+▶  erebus -ut
+```
+
+### Intercept and Crawl on HTTP
+
+Scanning for XSS vulnerabilities using the intercepting proxy while crawling on HTTP domains.
+
+```sh
+▶ erebus -t erebus-templates/xss-reflected.yaml -interceptor -crawl
+```
+
+### Intercept and Crawl on HTTPS
+
+Scanning for XSS vulnerabilities using the intercepting proxy while crawling on HTTPS domains.
 
 ```sh
 ▶ erebus -t erebus-templates/xss-reflected.yaml -interceptor -crawl -secure
 ```
+
+### Tool Chaining Usage
+
+Scanning for XSS vulnerabilities across range of subdomains using subfinder and Gau
+
+```sh
+▶ echo "paypal.com" | gau | erebus -t erebus-templates/xss-reflected.yaml
+```
+
+Crawl and Scan subdomains from a file in the format **https://** or **http://**
+
+```sh
+▶ cat alive | erebus -t erebus-templates/xss-reflected.yaml -crawl
+```
+
 
 [![asciicast](https://asciinema.org/a/424487.svg)](https://asciinema.org/a/424487)
 

@@ -171,10 +171,10 @@ Scanning for XSS vulnerabilities across range of subdomains using subfinder and 
 ▶ echo "paypal.com" | gau | erebus -t erebus-templates/xss-reflected.yaml
 ```
 
-Crawl and Scan subdomains from a file in the format **https://** or **http://**
+Scan subdomains from a file in the format **https://** or **http://**
 
 ```sh
-▶ cat alive | erebus -t erebus-templates/xss-reflected.yaml -crawl -scope ".*.\.paypal.com"
+▶ cat alive | erebus -t erebus-templates/xss-reflected.yaml
 ```
 
 

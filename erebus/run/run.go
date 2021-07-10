@@ -40,7 +40,8 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 	// Load the templates
 	fi, err := os.Stat(templates)
 	if err != nil {
-		gologger.Error().Msg(err.Error())
+		gologger.Error().Msg("Erebus only supports a single template for now.")
+		return
 	}
 
 	mode := fi.Mode()
@@ -85,57 +86,6 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 			break
 		}
 		fmt.Println("")
-	} else {
-
-		// Validate the template directory
-		dirName := yamlconf.ValidatePath(templates)
-		files, err := ioutil.ReadDir(dirName)
-		if err != nil {
-			gologger.Error().Msg(err.Error())
-		}
-		if silent == false {
-			for _, t := range files {
-				red := color.New(color.FgRed, color.Bold).SprintFunc()
-				yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
-				normal := color.New(color.FgMagenta, color.Bold).SprintFunc()
-				medium := color.New(color.FgYellow, color.Bold).SprintFunc()
-				low := color.New(color.FgGreen, color.Bold).SprintFunc()
-				info := color.New(color.FgBlue, color.Bold).SprintFunc()
-				white := color.New(color.FgWhite, color.Bold).SprintFunc()
-
-				// Read and parse the payloads from the templates
-				config := yamlconf.ReadTemplates(dirName + t.Name())
-
-				switch config.Template.Severity {
-				case "critical":
-					fmt.Printf("[%s] %s (%s) [%s]",
-						info(config.Template.Name),
-						white(config.Template.Description), yellow(config.Template.Author), red(config.Template.Severity))
-					break
-				case "high":
-					fmt.Printf("[%s] %s (%s) [%s]",
-						info(config.Template.Name),
-						white(config.Template.Description), yellow(config.Template.Author), normal(config.Template.Severity))
-					break
-				case "medium":
-					fmt.Printf("[%s] %s (%s) [%s]",
-						info(config.Template.Name),
-						white(config.Template.Description), yellow(config.Template.Author), medium(config.Template.Severity))
-					break
-				case "low":
-					fmt.Printf("[%s] %s (%s) [%s]",
-						info(config.Template.Name),
-						white(config.Template.Description), yellow(config.Template.Author), low(config.Template.Severity))
-					break
-				case "info":
-					fmt.Printf("[%s] %s (%s) [%s]",
-						info(config.Template.Name),
-						white(config.Template.Description), yellow(config.Template.Author), info(config.Template.Severity))
-					break
-				}
-			}
-			fmt.Println("")
-		}
 	}
 
 	// Check the conditions to see if we are using the templates or single payloads

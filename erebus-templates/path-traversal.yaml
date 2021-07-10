@@ -1,6 +1,8 @@
 template:
+   name: path-traversal
    severity: high
-   author: "zoidsec"
+   author: zoidsec
+   description: Path Traversal etc/passwd Disclosure
 
 request:
    payloads: 

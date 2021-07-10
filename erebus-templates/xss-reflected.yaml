@@ -1,6 +1,8 @@
 template:
+   name: xss-reflected
    severity: medium
-   author: "zoidsec"
+   author: zoidsec
+   description: Reflected Cross-Site-Scripting 
 
 request:
    payloads: 

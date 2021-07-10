@@ -1,6 +1,8 @@
 template:
+   name: mysql-sqli
    severity: high
-   author: "zoidsec"
+   author: zoidsec
+   description: Error Based SQL Injection Discovery
 
 request:
    payloads: 

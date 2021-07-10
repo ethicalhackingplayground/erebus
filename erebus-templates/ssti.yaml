@@ -1,6 +1,8 @@
 template:
+   name: ssti-discovery
    severity: high
-   author: "zoidsec"
+   author: zoidsec
+   description: Server Side Template Injection Discovery
 
 request:
    payloads: 

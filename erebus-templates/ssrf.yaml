@@ -1,6 +1,8 @@
 template:
+   name: param-ssrf
    severity: info
-   author: "zoidsec"
+   author: zoidsec
+   description: Server-Side Request Forgery Parameter Based
 
 request:
    payloads: 

@@ -1,6 +1,8 @@
 template:
+   name: crlf-discovery
    severity: info
-   author: "zoidsec"
+   author: zoidsec
+   description: CRLF Discovery
 
 request:
    payloads: 

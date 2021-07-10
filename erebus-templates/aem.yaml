@@ -1,6 +1,8 @@
 template:
+   name: aem-traversal
    severity: medium
    author: "zoidsec"
+   description: AEM CRX Path Traversal
 
 request:
    payloads: 

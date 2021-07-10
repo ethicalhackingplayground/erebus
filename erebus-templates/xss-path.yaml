@@ -1,6 +1,8 @@
 template:
+   name: xss-path
    severity: medium
-   author: "zoidsec"
+   author: zoidsec
+   description: Cross-Site-Scripting Path Based
 
 request:
    payloads: 

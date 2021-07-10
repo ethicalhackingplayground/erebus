@@ -1,6 +1,8 @@
 template:
+   name: xss-stored
    severity: high
-   author: "zoidsec"
+   author: zoidsec
+   description: Stored Based Cross-Site Scripting
 
 request:
    payloads: 

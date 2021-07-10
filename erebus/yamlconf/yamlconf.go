@@ -11,8 +11,10 @@ import (
 // Yaml Contruct
 type YamlConfig struct {
 	Template struct {
-		Severity string `yaml:"severity"`
-		Author   string `yaml:"author"`
+		Name        string `yaml:"name"`
+		Severity    string `yaml:"severity"`
+		Author      string `yaml:"author"`
+		Description string `yaml:"description"`
 	}
 
 	Request struct {

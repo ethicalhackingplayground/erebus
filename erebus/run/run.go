@@ -45,7 +45,46 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 
 	mode := fi.Mode()
 	if mode.IsRegular() {
-		gologger.Debug().Msgf("Loading Template [%s]", templates)
+
+		red := color.New(color.FgRed, color.Bold).SprintFunc()
+		yellow := color.New(color.FgYellow, color.Normal).SprintFunc()
+		normal := color.New(color.FgMagenta, color.Bold).SprintFunc()
+		medium := color.New(color.FgYellow, color.Bold).SprintFunc()
+		low := color.New(color.FgGreen, color.Bold).SprintFunc()
+		info := color.New(color.FgBlue, color.Bold).SprintFunc()
+		white := color.New(color.FgWhite, color.Bold).SprintFunc()
+		green := color.New(color.FgGreen, color.Bold).SprintFunc()
+
+		// Read and parse the payloads from the templates
+		config := yamlconf.ReadTemplates(templates)
+
+		switch config.Template.Severity {
+		case "critical":
+			fmt.Printf("[%s] %s (%s) [%s]",
+				info(config.Template.Name),
+				white(config.Template.Description), yellow(config.Author), red(config.Severity))
+			break
+		case "high":
+			fmt.Printf("[%s] %s (%s) [%s]",
+				info(config.Template.Name),
+				white(config.Template.Description), yellow(config.Author), normal(config.Severity))
+			break
+		case "medium":
+			fmt.Printf("[%s] %s (%s) [%s]",
+				info(config.Template.Name),
+				white(config.Template.Description), yellow(config.Author), medium(config.Severity))
+			break
+		case "low":
+			fmt.Printf("[%s] %s (%s) [%s]",
+				info(config.Template.Name),
+				white(config.Template.Description), yellow(config.Author), normal(config.Severity))
+			break
+		case "info":
+			fmt.Printf("[%s] %s (%s) [%s]",
+				info(config.Template.Name),
+				white(config.Template.Description), yellow(config.Author), info(config.Severity))
+			break
+		}
 		fmt.Println("")
 	} else {
 
@@ -57,7 +96,46 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 		}
 		if silent == false {
 			for _, t := range files {
-				gologger.Debug().Msgf("Loading Template [%s]", dirName+t.Name())
+				red := color.New(color.FgRed, color.Bold).SprintFunc()
+				yellow := color.New(color.FgYellow, color.Normal).SprintFunc()
+				normal := color.New(color.FgMagenta, color.Bold).SprintFunc()
+				medium := color.New(color.FgYellow, color.Bold).SprintFunc()
+				low := color.New(color.FgGreen, color.Bold).SprintFunc()
+				info := color.New(color.FgBlue, color.Bold).SprintFunc()
+				white := color.New(color.FgWhite, color.Bold).SprintFunc()
+				green := color.New(color.FgGreen, color.Bold).SprintFunc()
+
+				// Read and parse the payloads from the templates
+				config := yamlconf.ReadTemplates(dirName + t.Name)
+
+				switch config.Template.Severity {
+				case "critical":
+					fmt.Printf("[%s] %s (%s) [%s]",
+						info(config.Template.Name),
+						white(config.Template.Description), yellow(config.Author), red(config.Severity))
+					break
+				case "high":
+					fmt.Printf("[%s] %s (%s) [%s]",
+						info(config.Template.Name),
+						white(config.Template.Description), yellow(config.Author), normal(config.Severity))
+					break
+				case "medium":
+					fmt.Printf("[%s] %s (%s) [%s]",
+						info(config.Template.Name),
+						white(config.Template.Description), yellow(config.Author), medium(config.Severity))
+					break
+				case "low":
+					fmt.Printf("[%s] %s (%s) [%s]",
+						info(config.Template.Name),
+						white(config.Template.Description), yellow(config.Author), normal(config.Severity))
+					break
+				case "info":
+					fmt.Printf("[%s] %s (%s) [%s]",
+						info(config.Template.Name),
+						white(config.Template.Description), yellow(config.Author), info(config.Severity))
+					break
+				}
+				fmt.Println("")
 			}
 			fmt.Println("")
 		}

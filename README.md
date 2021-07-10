@@ -47,12 +47,12 @@ We have a [dedicated repository](https://github.com/ethicalhackingplayground/ere
 ### Install Erebus
 
 ```sh
-▶  GO111MODULE=off go get -v github.com/ethicalhackingplayground/erebus/erebus
+▶  GO111MODULE=off go get -u -v github.com/ethicalhackingplayground/erebus/erebus
 ```
 
-<table>
-<tr>
-<td>  
+</td>
+</tr>
+</table>
 
 ## Setup Erebus Interceptor
 
@@ -145,7 +145,7 @@ Usage of ./erebus:
 
 ### Intercept and Crawl on HTTP
 
-Scanning for XSS vulnerabilities using the intercepting proxy while crawling on HTTP domains.
+Scanning for XSS vulnerabilities using the intercepting proxy with all of paypal inscope while crawling on HTTP domains.
 
 ```sh
 ▶ erebus -t erebus-templates/xss-reflected.yaml -interceptor -crawl
@@ -153,10 +153,10 @@ Scanning for XSS vulnerabilities using the intercepting proxy while crawling on 
 
 ### Intercept and Crawl on HTTPS
 
-Scanning for XSS vulnerabilities using the intercepting proxy while crawling on HTTPS domains.
+Scanning for XSS vulnerabilities using the intercepting proxy with all of paypal inscope while crawling on HTTPS domains.
 
 ```sh
-▶ erebus -t erebus-templates/xss-reflected.yaml -interceptor -crawl -secure
+▶ erebus -t erebus-templates/xss-reflected.yaml -interceptor -crawl -secure -scope ".*.\.paypal.com"
 ```
 
 ### Tool Chaining Usage
@@ -170,7 +170,7 @@ Scanning for XSS vulnerabilities across range of subdomains using subfinder and 
 Crawl and Scan subdomains from a file in the format **https://** or **http://**
 
 ```sh
-▶ cat alive | erebus -t erebus-templates/xss-reflected.yaml -crawl
+▶ cat alive | erebus -t erebus-templates/xss-reflected.yaml -crawl -scope ".*.\.paypal.com"
 ```
 
 

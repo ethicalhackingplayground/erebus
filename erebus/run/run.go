@@ -465,9 +465,7 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 						template := dirName + files[j].Name()
 						config := yamlconf.ReadTemplates(template)
 
-						burpScopeParsed := ChangeXMLVersion(parseBurp)
-
-						burpXML := requests.ParseBurpFile(burpScopeParsed)
+						burpXML := requests.ParseBurpFile(parseBurp)
 
 						hosts := make(chan string)
 
@@ -492,9 +490,7 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 
 				} else {
 
-					// Declare some variables that handle the use of templates and XML sitemaps
-					burpScopeParsed := ChangeXMLVersion(parseBurp)
-					burpXML := requests.ParseBurpFile(burpScopeParsed)
+					burpXML := requests.ParseBurpFile(parseBurp)
 					config := yamlconf.ReadTemplates(templates)
 
 					// Define the hosts channel
@@ -561,26 +557,6 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 			}
 		}
 	}
-}
-
-func ChangeXMLVersion(xml string) string {
-
-	var file, err = os.OpenFile(xml, os.O_RDWR, 0644)
-	if err != nil {
-		gologger.Error().Msg(err.Error())
-		return ""
-	}
-	defer file.Close()
-
-	scanner := bufio.NewScanner(file)
-	var newXML = ""
-	for scanner.Scan() {
-		XmlRaw := scanner.Text()
-		newXML = strings.ReplaceAll(XmlRaw, "<?xml version=\"1.1\"?>", "<?xml version=\"1.0\"?>")
-	}
-
-	return newXML
-
 }
 
 // Reverse the string

@@ -47,7 +47,7 @@ We have a [dedicated repository](https://github.com/ethicalhackingplayground/ere
 ### Install Erebus
 
 ```sh
-▶  GO111MODULE=off go get -v github.com/ethicalhackingplayground/erebus/erebus
+▶  GO111MODULE=off go get -u -v github.com/ethicalhackingplayground/erebus/erebus
 ```
 
 <table>

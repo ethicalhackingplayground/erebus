@@ -11,6 +11,7 @@ request:
    paths: false
 response:
    statusCode: 200
-   header: "Set-Cookie:mycookie=myvalue"
+   header: 
+      -  "Set-Cookie:mycookie=myvalue"
    exclude: 
       - "%0D%0A"

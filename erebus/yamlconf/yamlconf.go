@@ -33,18 +33,21 @@ type YamlConfig struct {
 
 // read the templates directory and return the file
 func ReadTemplates(templates string) (conf *YamlConfig) {
-	file, err := ioutil.ReadFile(templates)
-	if err != nil {
-		gologger.Error().Msg(err.Error())
-		return
+	if strings.Contains(templates, ".yaml") {
+		file, err := ioutil.ReadFile(templates)
+		if err != nil {
+			gologger.Error().Msg(err.Error())
+			return
+		}
+		config := &YamlConfig{}
+		err = yaml.Unmarshal(file, &config)
+		if err != nil {
+			gologger.Error().Msg(err.Error())
+			return
+		}
+		return config
 	}
-	config := &YamlConfig{}
-	err = yaml.Unmarshal(file, &config)
-	if err != nil {
-		gologger.Error().Msg(err.Error())
-		return
-	}
-	return config
+	return nil
 }
 
 // validate the templates dir path

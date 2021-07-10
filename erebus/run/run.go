@@ -109,36 +109,39 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 			info := color.New(color.FgBlue, color.Bold).SprintFunc()
 			white := color.New(color.FgWhite, color.Bold).SprintFunc()
 
-			// Read and parse the payloads from the templates
-			config := yamlconf.ReadTemplates(dirName + files[j].Name())
+			if strings.HasSuffix(dirName+files[j].Name(), ".yaml") {
+				// Read and parse the payloads from the templates
+				config := yamlconf.ReadTemplates(dirName + files[j].Name())
 
-			switch config.Template.Severity {
-			case "critical":
-				fmt.Printf("[%s] %s (%s) [%s]",
-					info(config.Template.Name),
-					white(config.Template.Description), yellow(config.Template.Author), red(config.Template.Severity))
-				break
-			case "high":
-				fmt.Printf("[%s] %s (%s) [%s]",
-					info(config.Template.Name),
-					white(config.Template.Description), yellow(config.Template.Author), normal(config.Template.Severity))
-				break
-			case "medium":
-				fmt.Printf("[%s] %s (%s) [%s]",
-					info(config.Template.Name),
-					white(config.Template.Description), yellow(config.Template.Author), medium(config.Template.Severity))
-				break
-			case "low":
-				fmt.Printf("[%s] %s (%s) [%s]",
-					info(config.Template.Name),
-					white(config.Template.Description), yellow(config.Template.Author), low(config.Template.Severity))
-				break
-			case "info":
-				fmt.Printf("[%s] %s (%s) [%s]",
-					info(config.Template.Name),
-					white(config.Template.Description), yellow(config.Template.Author), info(config.Template.Severity))
-				break
+				switch config.Template.Severity {
+				case "critical":
+					fmt.Printf("[%s] %s (%s) [%s]",
+						info(config.Template.Name),
+						white(config.Template.Description), yellow(config.Template.Author), red(config.Template.Severity))
+					break
+				case "high":
+					fmt.Printf("[%s] %s (%s) [%s]",
+						info(config.Template.Name),
+						white(config.Template.Description), yellow(config.Template.Author), normal(config.Template.Severity))
+					break
+				case "medium":
+					fmt.Printf("[%s] %s (%s) [%s]",
+						info(config.Template.Name),
+						white(config.Template.Description), yellow(config.Template.Author), medium(config.Template.Severity))
+					break
+				case "low":
+					fmt.Printf("[%s] %s (%s) [%s]",
+						info(config.Template.Name),
+						white(config.Template.Description), yellow(config.Template.Author), low(config.Template.Severity))
+					break
+				case "info":
+					fmt.Printf("[%s] %s (%s) [%s]",
+						info(config.Template.Name),
+						white(config.Template.Description), yellow(config.Template.Author), info(config.Template.Severity))
+					break
+				}
 			}
+
 			fmt.Println("\n")
 		}
 	}
@@ -534,35 +537,66 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 
 					for j := 0; j < len(files); j++ {
 						template := dirName + files[j].Name()
-						config := yamlconf.ReadTemplates(template)
 
 						burpXML := requests.ParseBurpFile(parseBurp)
-
 						hosts := make(chan string)
 
-						if crawl == true {
+						if strings.HasSuffix(template, ".yaml") {
+							config := yamlconf.ReadTemplates(template)
 
-							payloadList := []string{}
+							if crawl == true {
 
-							// Find and visit all links
-							c.OnHTML("a[href]", func(e *colly.HTMLElement) {
-								link := e.Attr("href")
-								e.Request.Visit(e.Request.AbsoluteURL(link))
-							})
+								payloadList := []string{}
 
-							// The request of each link visisted
-							c.OnRequest(func(r *colly.Request) {
-								if config.Request.Parameters == true {
+								// Find and visit all links
+								c.OnHTML("a[href]", func(e *colly.HTMLElement) {
+									link := e.Attr("href")
+									e.Request.Visit(e.Request.AbsoluteURL(link))
+								})
 
-									// Check if the Url contains parameters
-									params, _ := url.Parse(r.URL.String())
-									if len(params.Query()) > 0 {
+								// The request of each link visisted
+								c.OnRequest(func(r *colly.Request) {
+									if config.Request.Parameters == true {
+
+										// Check if the Url contains parameters
+										params, _ := url.Parse(r.URL.String())
+										if len(params.Query()) > 0 {
+
+											// Only visit inscope items once
+											if strings.ContainsAny(r.URL.String(), scope) &&
+												!Contains(visited, r.URL.String()) &&
+												!Contains(config.Request.Exclude, r.URL.String()) {
+
+												if tool != "" {
+
+													// If command is specified then run it first
+													cmd := exec.Command("/bin/bash", "-c", "echo "+r.URL.String()+" | "+tool)
+													cmdReader, _ := cmd.StdoutPipe()
+
+													scanner := bufio.NewScanner(cmdReader)
+
+													for scanner.Scan() {
+
+														// Keep track of visited URL(s)
+														visited = append(visited, scanner.Text())
+
+													}
+													// Crawl and scan
+													scan.CrawlAndScan(r, payloadList, template, *config, silent, out)
+
+												} else {
+													// Crawl and scan
+													scan.CrawlAndScan(r, payloadList, template, *config, silent, out)
+												}
+											}
+										}
+
+									} else {
 
 										// Only visit inscope items once
 										if strings.ContainsAny(r.URL.String(), scope) &&
 											!Contains(visited, r.URL.String()) &&
 											!Contains(config.Request.Exclude, r.URL.String()) {
-
 											if tool != "" {
 
 												// If command is specified then run it first
@@ -587,38 +621,9 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 										}
 									}
 
-								} else {
+								})
 
-									// Only visit inscope items once
-									if strings.ContainsAny(r.URL.String(), scope) &&
-										!Contains(visited, r.URL.String()) &&
-										!Contains(config.Request.Exclude, r.URL.String()) {
-										if tool != "" {
-
-											// If command is specified then run it first
-											cmd := exec.Command("/bin/bash", "-c", "echo "+r.URL.String()+" | "+tool)
-											cmdReader, _ := cmd.StdoutPipe()
-
-											scanner := bufio.NewScanner(cmdReader)
-
-											for scanner.Scan() {
-
-												// Keep track of visited URL(s)
-												visited = append(visited, scanner.Text())
-
-											}
-											// Crawl and scan
-											scan.CrawlAndScan(r, payloadList, template, *config, silent, out)
-
-										} else {
-											// Crawl and scan
-											scan.CrawlAndScan(r, payloadList, template, *config, silent, out)
-										}
-									}
-								}
-
-							})
-
+							}
 						}
 
 						// Use parallelism to speed up the processing
@@ -775,34 +780,67 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 
 						// Read and parse the payloads from the templates
 						template := dirName + files[j].Name()
-						config := yamlconf.ReadTemplates(template)
+
 						payloadList := []string{}
 						hosts := make(chan string)
-						numPayloads := len(config.Request.Payloads)
-						for i := 0; i < numPayloads; i++ {
-							payloadList = append(payloadList, config.Request.Payloads[i])
-						}
 
-						if crawl == true {
-							// Find and visit all links
-							c.OnHTML("a[href]", func(e *colly.HTMLElement) {
-								link := e.Attr("href")
-								e.Request.Visit(e.Request.AbsoluteURL(link))
-							})
+						if strings.HasSuffix(template, ".yaml") {
+							config := yamlconf.ReadTemplates(template)
+							numPayloads := len(config.Request.Payloads)
+							for i := 0; i < numPayloads; i++ {
+								payloadList = append(payloadList, config.Request.Payloads[i])
+							}
 
-							// The request of each link visisted
-							c.OnRequest(func(r *colly.Request) {
-								if config.Request.Parameters == true {
+							if crawl == true {
+								// Find and visit all links
+								c.OnHTML("a[href]", func(e *colly.HTMLElement) {
+									link := e.Attr("href")
+									e.Request.Visit(e.Request.AbsoluteURL(link))
+								})
 
-									// Check if the Url contains parameters
-									params, _ := url.Parse(r.URL.String())
-									if len(params.Query()) > 0 {
+								// The request of each link visisted
+								c.OnRequest(func(r *colly.Request) {
+									if config.Request.Parameters == true {
+
+										// Check if the Url contains parameters
+										params, _ := url.Parse(r.URL.String())
+										if len(params.Query()) > 0 {
+
+											// Only visit inscope items once
+											if strings.ContainsAny(r.URL.String(), scope) &&
+												!Contains(visited, r.URL.String()) &&
+												!Contains(config.Request.Exclude, r.URL.String()) {
+
+												if tool != "" {
+
+													// If command is specified then run it first
+													cmd := exec.Command("/bin/bash", "-c", "echo "+r.URL.String()+" | "+tool)
+													cmdReader, _ := cmd.StdoutPipe()
+
+													scanner := bufio.NewScanner(cmdReader)
+
+													for scanner.Scan() {
+
+														// Keep track of visited URL(s)
+														visited = append(visited, scanner.Text())
+
+													}
+													// Crawl and scan
+													scan.CrawlAndScan(r, payloadList, template, *config, silent, out)
+
+												} else {
+													// Crawl and scan
+													scan.CrawlAndScan(r, payloadList, template, *config, silent, out)
+												}
+											}
+										}
+
+									} else {
 
 										// Only visit inscope items once
 										if strings.ContainsAny(r.URL.String(), scope) &&
 											!Contains(visited, r.URL.String()) &&
 											!Contains(config.Request.Exclude, r.URL.String()) {
-
 											if tool != "" {
 
 												// If command is specified then run it first
@@ -827,38 +865,9 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 										}
 									}
 
-								} else {
+								})
 
-									// Only visit inscope items once
-									if strings.ContainsAny(r.URL.String(), scope) &&
-										!Contains(visited, r.URL.String()) &&
-										!Contains(config.Request.Exclude, r.URL.String()) {
-										if tool != "" {
-
-											// If command is specified then run it first
-											cmd := exec.Command("/bin/bash", "-c", "echo "+r.URL.String()+" | "+tool)
-											cmdReader, _ := cmd.StdoutPipe()
-
-											scanner := bufio.NewScanner(cmdReader)
-
-											for scanner.Scan() {
-
-												// Keep track of visited URL(s)
-												visited = append(visited, scanner.Text())
-
-											}
-											// Crawl and scan
-											scan.CrawlAndScan(r, payloadList, template, *config, silent, out)
-
-										} else {
-											// Crawl and scan
-											scan.CrawlAndScan(r, payloadList, template, *config, silent, out)
-										}
-									}
-								}
-
-							})
-
+							}
 						}
 
 						// Use parallelism to speed up the processing

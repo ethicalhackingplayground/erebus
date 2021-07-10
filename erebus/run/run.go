@@ -59,27 +59,27 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 
 		switch config.Template.Severity {
 		case "critical":
-			fmt.Printf("[%s] %s (%s) [%s]",
+			fmt.Printf("[%s] %s (%s) [%s]\n",
 				info(config.Template.Name),
 				white(config.Template.Description), yellow(config.Template.Author), red(config.Template.Severity))
 			break
 		case "high":
-			fmt.Printf("[%s] %s (%s) [%s]",
+			fmt.Printf("[%s] %s (%s) [%s]\n",
 				info(config.Template.Name),
 				white(config.Template.Description), yellow(config.Template.Author), normal(config.Template.Severity))
 			break
 		case "medium":
-			fmt.Printf("[%s] %s (%s) [%s]",
+			fmt.Printf("[%s] %s (%s) [%s]\n",
 				info(config.Template.Name),
 				white(config.Template.Description), yellow(config.Template.Author), medium(config.Template.Severity))
 			break
 		case "low":
-			fmt.Printf("[%s] %s (%s) [%s]",
+			fmt.Printf("[%s] %s (%s) [%s]\n",
 				info(config.Template.Name),
 				white(config.Template.Description), yellow(config.Template.Author), low(config.Template.Severity))
 			break
 		case "info":
-			fmt.Printf("[%s] %s (%s) [%s]",
+			fmt.Printf("[%s] %s (%s) [%s]\n",
 				info(config.Template.Name),
 				white(config.Template.Description), yellow(config.Template.Author), info(config.Template.Severity))
 			break
@@ -115,27 +115,27 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 
 				switch config.Template.Severity {
 				case "critical":
-					fmt.Printf("[%s] %s (%s) [%s]",
+					fmt.Printf("[%s] %s (%s) [%s]\n",
 						info(config.Template.Name),
 						white(config.Template.Description), yellow(config.Template.Author), red(config.Template.Severity))
 					break
 				case "high":
-					fmt.Printf("[%s] %s (%s) [%s]",
+					fmt.Printf("[%s] %s (%s) [%s]\n",
 						info(config.Template.Name),
 						white(config.Template.Description), yellow(config.Template.Author), normal(config.Template.Severity))
 					break
 				case "medium":
-					fmt.Printf("[%s] %s (%s) [%s]",
+					fmt.Printf("[%s] %s (%s) [%s]\n",
 						info(config.Template.Name),
 						white(config.Template.Description), yellow(config.Template.Author), medium(config.Template.Severity))
 					break
 				case "low":
-					fmt.Printf("[%s] %s (%s) [%s]",
+					fmt.Printf("[%s] %s (%s) [%s]\n",
 						info(config.Template.Name),
 						white(config.Template.Description), yellow(config.Template.Author), low(config.Template.Severity))
 					break
 				case "info":
-					fmt.Printf("[%s] %s (%s) [%s]",
+					fmt.Printf("[%s] %s (%s) [%s]\n",
 						info(config.Template.Name),
 						white(config.Template.Description), yellow(config.Template.Author), info(config.Template.Severity))
 					break

@@ -14,11 +14,20 @@
 <a href="https://discord.gg/MQWCem5b"><img src="https://img.shields.io/discord/695645237418131507.svg?logo=discord"></a>
 </p>
 
+<p align="center">
+  <a href="#how-templates-work">How</a> •
+  <a href="#install-erebus">Install</a> •
+  <a href="#setup-erebus-interceptor">Interceptor</a>
+  <a href="#download-templates">Templates</a>
+  <a href="#usage">Usage</a>
+  <a href="https://discord.gg/MQWCem5b">Join Discord</a>
+</p>
+
 ---
 
 Erebus is used to test every parameter across targets based on Yaml templates leading to zero false positives and providing fast scanning on large number of hosts. Erebus offers many useful features including an intercepting proxy which allows researchers to browse the web, click on links and erebus will test every parameter that passes through the proxy.
 
-We have a [dedicated repository](https://github.com/ethicalhackingplayground/erebus/erebus-templates) that houses various types of vulnerability templates.
+We have a [dedicated repository](https://github.com/ethicalhackingplayground/erebus/tree/main/erebus-templates) that houses various types of vulnerability templates.
 
 
 
@@ -30,23 +39,17 @@ We have a [dedicated repository](https://github.com/ethicalhackingplayground/ere
 </h3>
 
 
-### Install Erebus Binary
+### Install Erebus
 
 ```sh
 ▶  GO111MODULE=off go get -v github.com/ethicalhackingplayground/erebus/erebus
-```
-
-### Install Erebus From Github
-
-```sh
-▶  git clone https://github.com/ethicalhackingplayground/erebus ; cd erebus/erebus ; go build ; sudo cp erebus /bin
 ```
 
 <table>
 <tr>
 <td>  
 
-## Setting up the Erebus Interceptor
+## Setup Erebus Interceptor
 
 Make sure to setup a proxy in your browser before you use the **erebus interceptor** for firefox go to 
 
@@ -62,7 +65,7 @@ type in **127.0.0.1** in HTTP Proxy then for the port type in **8080** make sure
 <tr>
 <td> 
 
-## Install the SSL Certificates to use TLS
+## Install the SSL Certificates to use HTTPS
 
 I have provided the certificates for you to use for **HTTPS** testing, all you need to do is install these by:
 

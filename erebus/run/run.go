@@ -35,23 +35,7 @@ func orPanic(err error) {
 }
 
 // Run the erebus scanner based on the parsed arguments
-func Scanner(parseBurp string, templates string, silent bool, threads int, out string, tool string, interceptor bool, proxyPort string, scope string, crawl bool, ishttps bool, depth int) {
-
-	if isCommandAvailable("git") && updateTemplates != "" {
-		gologger.Info().Msg("Updating Erebus Templates\n")
-
-		// If command is specified then run it first
-		cmd := exec.Command("/bin/bash", "-c", "git clone https://github.com/ethicalhackingplayground/erebus-templates")
-		cmdReader, _ := cmd.StdoutPipe()
-
-		scanner := bufio.NewScanner(cmdReader)
-
-		for scanner.Scan() {
-
-			// Keep track of visited URL(s)
-			gologger.Info().Msg(scanner.Text())
-		}
-	}
+func Scanner(parseBurp string, templates string, silent bool, threads int, out string, tool string, interceptor bool, proxyPort string, scope string, crawl bool, ishttps bool, depth int, updateTemplates bool) {
 
 	// Load the templates
 	fi, err := os.Stat(templates)
@@ -1034,15 +1018,6 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 			}
 		}
 	}
-}
-
-// Checks to see if the command is avaiable
-func isCommandAvailable(name string) bool {
-	cmd := exec.Command("command", "-v", name)
-	if err := cmd.Run(); err != nil {
-		return false
-	}
-	return true
 }
 
 // Reverse the string

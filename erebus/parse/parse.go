@@ -3,6 +3,8 @@ package parse
 import (
 	"flag"
 	"math/rand"
+	"os"
+	"os/exec"
 	"runtime"
 	"time"
 
@@ -36,8 +38,8 @@ func Scan() {
 	flag.IntVar(&depth, "depth", 5, "the crawl depth")
 	interceptor := flag.Bool("interceptor", false, "intercept the requests through the proxy and test each parameter")
 	ishttps := flag.Bool("secure", false, "determaines if the connection is secure or not")
-	crawl := flag.Bool("crawl", true, "crawl through each intercepted request")
-
+	crawl := flag.Bool("crawl", false, "crawl through each intercepted request")
+	updateTemplates := flag.Bool("ut", false, "Install or update the erebus-templates")
 	silent := flag.Bool("silent", false, "silent (only show vulnerable urls)")
 	// Parse the arguments
 	flag.Parse()
@@ -47,7 +49,7 @@ func Scan() {
 	runtime.GOMAXPROCS(nCPU)
 
 	// Check if the templates are used.
-	if templates == "" {
+	if templates == "" && *updateTemplates == false {
 		// Print the banner
 		banner.Display()
 		// Show the arguments
@@ -57,7 +59,37 @@ func Scan() {
 		gologger.Error().Msg("Please specify a template")
 
 	} else {
+
+		if commandExists("git") && *updateTemplates == true {
+
+			gologger.Info().Msg("Updating Erebus Templates\n")
+
+			// If command is specified then run it first
+			_, err := exec.Command("/bin/bash", "-c", "rm -rf erebus-templates ; git clone --verbose --progress  https://github.com/ethicalhackingplayground/erebus-templates").Output()
+			if err != nil {
+				// Display the output
+				gologger.Error().Msg(err.Error())
+				return
+			}
+
+			// Display the output
+			gologger.Info().Msg("🔥 Erebus-templates Download 🔥")
+
+		} else {
+
+			if _, err := os.Stat("erebus-templates"); os.IsNotExist(err) {
+				gologger.Error().Msg("Please, Download the erebus-templates or use -ut to install them\n")
+				return
+			}
+		}
+
 		// Run the scanner
-		run.Scanner(parseBurp, templates, *silent, threads, output, tool, *interceptor, proxyPort, scope, *crawl, *ishttps, depth)
+		run.Scanner(parseBurp, templates, *silent, threads, output, tool, *interceptor, proxyPort, scope, *crawl, *ishttps, depth, *updateTemplates)
 	}
+}
+
+// as util
+func commandExists(cmd string) bool {
+	_, err := exec.LookPath(cmd)
+	return err == nil
 }

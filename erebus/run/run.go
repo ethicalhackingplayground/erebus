@@ -141,9 +141,8 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 					break
 				}
 			}
-
-			fmt.Println("\n")
 		}
+		fmt.Println("\n")
 	}
 
 	// Check the conditions to see if we are using the templates or single payloads

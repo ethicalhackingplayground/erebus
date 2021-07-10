@@ -624,28 +624,27 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 								})
 
 							}
-						}
-
-						// Use parallelism to speed up the processing
-						for i := 0; i < threads; i++ {
-							wg.Add(1)
-							go func() {
-								for url := range hosts {
-									scan.ScanBurpXmlWithTemplates(*config, url, config.Request.Payloads, silent, template, out, tool)
-									if crawl == true {
-										c.Visit(url)
+							// Use parallelism to speed up the processing
+							for i := 0; i < threads; i++ {
+								wg.Add(1)
+								go func() {
+									for url := range hosts {
+										scan.ScanBurpXmlWithTemplates(*config, url, config.Request.Payloads, silent, template, out, tool)
+										if crawl == true {
+											c.Visit(url)
+										}
 									}
-								}
-								wg.Done()
+									wg.Done()
 
-							}()
-						}
+								}()
+							}
 
-						for i := 0; i < len(burpXML.Item.Url); i++ {
-							hosts <- burpXML.Item.Url[i]
+							for i := 0; i < len(burpXML.Item.Url); i++ {
+								hosts <- burpXML.Item.Url[i]
+							}
+							close(hosts)
+							wg.Wait()
 						}
-						close(hosts)
-						wg.Wait()
 					}
 
 				} else {
@@ -868,20 +867,19 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 								})
 
 							}
-						}
-
-						// Use parallelism to speed up the processing
-						for i := 0; i < threads; i++ {
-							wg.Add(1)
-							go func() {
-								for url := range hosts {
-									scan.ScanHostsWithTemplates(*config, url, payloadList, silent, template, out, tool, interceptor)
-									if crawl == true {
-										c.Visit(url)
+							// Use parallelism to speed up the processing
+							for i := 0; i < threads; i++ {
+								wg.Add(1)
+								go func() {
+									for url := range hosts {
+										scan.ScanHostsWithTemplates(*config, url, payloadList, silent, template, out, tool, interceptor)
+										if crawl == true {
+											c.Visit(url)
+										}
 									}
-								}
-								wg.Done()
-							}()
+									wg.Done()
+								}()
+							}
 						}
 
 						// Iterate over Stdin and parse the parameters to test.

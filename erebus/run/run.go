@@ -133,8 +133,8 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 						white(config.Template.Description), yellow(config.Template.Author), info(config.Template.Severity))
 					break
 				}
-				fmt.Println("")
 			}
+			fmt.Println("")
 		}
 	}
 

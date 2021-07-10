@@ -94,7 +94,7 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 		// Intercetor is turned on
 		if interceptor == true {
 
-			fmt.Println("\n\n")
+			fmt.Println("\n")
 			gologger.Info().Msgf("Proxy started on : %s\n\n", proxyPort)
 
 			// Read and parse the payloads from the templates

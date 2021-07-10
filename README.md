@@ -17,10 +17,10 @@
 <p align="center">
   <a href="#how-templates-work">How</a> •
   <a href="#install-erebus">Install</a> •
-  <a href="#setup-erebus-interceptor">Interceptor</a>
-  <a href="#download-templates">Templates</a>
-  <a href="#usage">Usage</a>
-  <a href="https://discord.gg/MQWCem5b">Join Discord</a>
+  <a href="#setup-erebus-interceptor">Interceptor</a> •
+  <a href="#download-templates">Templates</a> •
+  <a href="#usage">Usage</a> •
+  <a href="https://discord.gg/MQWCem5b">Join Discord</a> 
 </p>
 
 ---

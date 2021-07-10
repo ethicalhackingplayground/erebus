@@ -47,7 +47,7 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 	if mode.IsRegular() {
 
 		red := color.New(color.FgRed, color.Bold).SprintFunc()
-		yellow := color.New(color.FgYellow, color.Normal).SprintFunc()
+		yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 		normal := color.New(color.FgMagenta, color.Bold).SprintFunc()
 		medium := color.New(color.FgYellow, color.Bold).SprintFunc()
 		low := color.New(color.FgGreen, color.Bold).SprintFunc()
@@ -96,7 +96,7 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 		if silent == false {
 			for _, t := range files {
 				red := color.New(color.FgRed, color.Bold).SprintFunc()
-				yellow := color.New(color.FgYellow, color.Normal).SprintFunc()
+				yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 				normal := color.New(color.FgMagenta, color.Bold).SprintFunc()
 				medium := color.New(color.FgYellow, color.Bold).SprintFunc()
 				low := color.New(color.FgGreen, color.Bold).SprintFunc()

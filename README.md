@@ -17,8 +17,8 @@
 <p align="center">
   <a href="#how-templates-work">How</a> •
   <a href="#install-erebus">Install</a> •
+  <a href="#erebus-templates">Templates</a> •
   <a href="#setup-erebus-interceptor">Interceptor</a> •
-  <a href="#download-templates">Templates</a> •
   <a href="#usage">Usage</a> •
   <a href="https://discord.gg/MQWCem5b">Join Discord</a> 
 </p>
@@ -39,16 +39,28 @@ We have a [dedicated repository](https://github.com/ethicalhackingplayground/ere
 </h3>
 
 
-<table>
-<tr>
-<td>  
 
-
-### Install Erebus
+# Install Erebus
 
 ```sh
 ▶  GO111MODULE=off go get -u -v github.com/ethicalhackingplayground/erebus/erebus
 ```
+
+# Install Templates
+
+```sh
+▶  erebus -ut
+```
+
+<table>
+<tr>
+<td>  
+
+### Erebus Templates
+
+Erebus has had built-in support for automatic update/download templates (https://github.com/ethicalhackingplayground/erebus/releases/latest). [**Erebus-Templates**](https://github.com/ethicalhackingplayground/erebus-templates) project provides a community-contributed list of ready-to-use templates that can be used with part of your testing.
+
+You may use the `-ut` flag to update the nuclei templates at any time.
 
 </td>
 </tr>
@@ -58,7 +70,7 @@ We have a [dedicated repository](https://github.com/ethicalhackingplayground/ere
 <tr>
 <td>  
 
-## Setup Erebus Interceptor
+### Setup Erebus Interceptor
 
 Make sure to setup a proxy in your browser before you use the **erebus interceptor** for firefox go to 
 
@@ -74,26 +86,13 @@ type in **127.0.0.1** in HTTP Proxy then for the port type in **8080** make sure
 <tr>
 <td> 
 
-## Install the SSL Certificates to use HTTPS
+### Install the SSL Certificates to use HTTPS
 
 I have provided the certificates for you to use for **HTTPS** testing, all you need to do is install these by:
 
 ▶ Settings ▶ Privacy & Security ▶ Certificates ▶ View Certificates ▶ Import ▶ 
 
 Select the **.crt** file in the erebus directory and proceed by trusting and installing.
-
-</td>
-</tr>
-</table>
-
-
-<table>
-<tr>
-<td>  
-
-### Download Templates
-
-All the available **erebus-templates** from [Github project](https://github.com/ethicalhackingplayground/erebus-templates), are here and ready to use.
 
 </td>
 </tr>
@@ -141,11 +140,10 @@ Usage of ./erebus:
 
 </details>
 
-### Install Templates
 
-```sh
-▶  erebus -ut
-```
+# Usage
+
+Here are a few examples on how to use the erebus scanner for part of your testing.
 
 ### Intercept and Crawl on HTTP
 

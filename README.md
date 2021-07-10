@@ -89,7 +89,7 @@ Select the **.crt** file in the erebus directory and proceed by trusting and ins
 
 ### Download Templates
 
-All the available **erebus-templates** from [Github project](https://github.com/ethicalhackingplayground/erebus/tree/main/erebus-templates), are here and ready to use.
+All the available **erebus-templates** from [Github project](https://github.com/ethicalhackingplayground/erebus-templates), are here and ready to use.
 
 </td>
 </tr>

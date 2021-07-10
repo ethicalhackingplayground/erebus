@@ -11,7 +11,7 @@
 <a href="https://github.com/ethicalhackingplayground/erebus/issues"><img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat"></a>
 <a href="https://github.com/ethicalhackingplayground/erebus/releases"><img src="https://img.shields.io/github/release/ethicalhackingplayground/erebus"></a>
 <a href="https://twitter.com/z0idsec"><img src="https://img.shields.io/twitter/follow/z0idsec.svg?logo=twitter"></a>
-<a href="https://discord.gg/MQWCem5b"><img src="https://img.shields.io/discord/695645237418131507.svg?logo=discord"></a>
+<a href="https://discord.gg/MQWCem5b"><img src="https://img.shields.io/discord/862900124740616192.svg?logo=discord"></a>
 </p>
 
 <p align="center">

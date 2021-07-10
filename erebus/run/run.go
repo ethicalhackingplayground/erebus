@@ -16,7 +16,7 @@ import (
 	"github.com/ethicalhackingplayground/erebus/erebus/requests"
 	"github.com/ethicalhackingplayground/erebus/erebus/scan"
 	"github.com/ethicalhackingplayground/erebus/erebus/yamlconf"
-
+	"github.com/fatih/color"
 	"github.com/gocolly/colly/v2"
 	"github.com/projectdiscovery/gologger"
 	"gopkg.in/elazarl/goproxy.v1"
@@ -53,7 +53,6 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 		low := color.New(color.FgGreen, color.Bold).SprintFunc()
 		info := color.New(color.FgBlue, color.Bold).SprintFunc()
 		white := color.New(color.FgWhite, color.Bold).SprintFunc()
-		green := color.New(color.FgGreen, color.Bold).SprintFunc()
 
 		// Read and parse the payloads from the templates
 		config := yamlconf.ReadTemplates(templates)
@@ -62,27 +61,27 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 		case "critical":
 			fmt.Printf("[%s] %s (%s) [%s]",
 				info(config.Template.Name),
-				white(config.Template.Description), yellow(config.Author), red(config.Severity))
+				white(config.Template.Description), yellow(config.Template.Author), red(config.Template.Severity))
 			break
 		case "high":
 			fmt.Printf("[%s] %s (%s) [%s]",
 				info(config.Template.Name),
-				white(config.Template.Description), yellow(config.Author), normal(config.Severity))
+				white(config.Template.Description), yellow(config.Template.Author), normal(config.Template.Severity))
 			break
 		case "medium":
 			fmt.Printf("[%s] %s (%s) [%s]",
 				info(config.Template.Name),
-				white(config.Template.Description), yellow(config.Author), medium(config.Severity))
+				white(config.Template.Description), yellow(config.Template.Author), medium(config.Template.Severity))
 			break
 		case "low":
 			fmt.Printf("[%s] %s (%s) [%s]",
 				info(config.Template.Name),
-				white(config.Template.Description), yellow(config.Author), normal(config.Severity))
+				white(config.Template.Description), yellow(config.Template.Author), low(config.Template.Severity))
 			break
 		case "info":
 			fmt.Printf("[%s] %s (%s) [%s]",
 				info(config.Template.Name),
-				white(config.Template.Description), yellow(config.Author), info(config.Severity))
+				white(config.Template.Description), yellow(config.Template.Author), info(config.Template.Severity))
 			break
 		}
 		fmt.Println("")
@@ -103,41 +102,39 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 				low := color.New(color.FgGreen, color.Bold).SprintFunc()
 				info := color.New(color.FgBlue, color.Bold).SprintFunc()
 				white := color.New(color.FgWhite, color.Bold).SprintFunc()
-				green := color.New(color.FgGreen, color.Bold).SprintFunc()
 
 				// Read and parse the payloads from the templates
-				config := yamlconf.ReadTemplates(dirName + t.Name)
+				config := yamlconf.ReadTemplates(dirName + t.Name())
 
 				switch config.Template.Severity {
 				case "critical":
 					fmt.Printf("[%s] %s (%s) [%s]",
 						info(config.Template.Name),
-						white(config.Template.Description), yellow(config.Author), red(config.Severity))
+						white(config.Template.Description), yellow(config.Template.Author), red(config.Template.Severity))
 					break
 				case "high":
 					fmt.Printf("[%s] %s (%s) [%s]",
 						info(config.Template.Name),
-						white(config.Template.Description), yellow(config.Author), normal(config.Severity))
+						white(config.Template.Description), yellow(config.Template.Author), normal(config.Template.Severity))
 					break
 				case "medium":
 					fmt.Printf("[%s] %s (%s) [%s]",
 						info(config.Template.Name),
-						white(config.Template.Description), yellow(config.Author), medium(config.Severity))
+						white(config.Template.Description), yellow(config.Template.Author), medium(config.Template.Severity))
 					break
 				case "low":
 					fmt.Printf("[%s] %s (%s) [%s]",
 						info(config.Template.Name),
-						white(config.Template.Description), yellow(config.Author), normal(config.Severity))
+						white(config.Template.Description), yellow(config.Template.Author), low(config.Template.Severity))
 					break
 				case "info":
 					fmt.Printf("[%s] %s (%s) [%s]",
 						info(config.Template.Name),
-						white(config.Template.Description), yellow(config.Author), info(config.Severity))
+						white(config.Template.Description), yellow(config.Template.Author), info(config.Template.Severity))
 					break
 				}
 				fmt.Println("")
 			}
-			fmt.Println("")
 		}
 	}
 

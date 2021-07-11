@@ -52,23 +52,12 @@ We have a [dedicated repository](https://github.com/ethicalhackingplayground/ere
 ▶  erebus -ut
 ```
 
-<table>
-<tr>
-<td>  
-
 # Erebus Templates
 
 Erebus has had built-in support for automatic update/download templates (https://github.com/ethicalhackingplayground/erebus/releases/latest). [**Erebus-Templates**](https://github.com/ethicalhackingplayground/erebus-templates) project provides a community-contributed list of ready-to-use templates that can be used with part of your testing.
 
 You may use the `-ut` flag to update the nuclei templates at any time.
 
-</td>
-</tr>
-</table>
-
-<table>
-<tr>
-<td>  
 
 # Setup Erebus Interceptor
 
@@ -78,14 +67,6 @@ Make sure to setup a proxy in your browser before you use the **erebus intercept
 
 type in **127.0.0.1** in HTTP Proxy then for the port type in **8080** make sure to enable **Also use this proxy for FTP and HTTPS**
 
-</td>
-</tr>
-</table>
-
-<table>
-<tr>
-<td> 
-
 # Install the SSL Certificates to use HTTPS
 
 I have provided the certificates for you to use for **HTTPS** testing, all you need to do is install these by:
@@ -93,11 +74,6 @@ I have provided the certificates for you to use for **HTTPS** testing, all you n
 ▶ Settings ▶ Privacy & Security ▶ Certificates ▶ View Certificates ▶ Import ▶ 
 
 Select the **.crt** file in the erebus directory and proceed by trusting and installing.
-
-</td>
-</tr>
-</table>
-
 
 # Usage
 

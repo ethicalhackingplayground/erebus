@@ -211,293 +211,73 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 					gologger.Error().Msg(err.Error())
 				}
 
-				// Parse the form if the request is a POST/PUT
-				if strings.Contains(ctx.Req.URL.String(), scope) {
+				if config.Request.Parameters == true {
 
-					if config.Request.Parameters == true {
-						// Check if the Url contains parameters
-						params, _ := url.Parse(r.URL.String())
+					// Check if the Url contains parameters
+					params, _ := url.Parse(ctx.Req.URL.String())
 
-						// Only visit links once
-						if len(params.Query()) > 0 &&
-							!Contains(visited, ctx.Req.URL.String()) &&
-							!Contains(config.Request.Exclude, ctx.Req.URL.String()) {
+					// Only visit links once
+					if len(params.Query()) > 0 &&
+						Contains(visited, ctx.Req.URL.String()) == false &&
+						Contains(config.Request.Exclude, ctx.Req.URL.String()) == false {
 
-							if tool != "" {
+						// Intercept the request and scan each parameter
+						scan.InterceptAndScan(ctx.Req, payloadList, templates, *config, silent, out)
 
-								// If command is specified then run it first
-								cmd := exec.Command("/bin/bash", "-c", "echo "+ctx.Req.URL.String()+" | "+tool)
-								cmdReader, _ := cmd.StdoutPipe()
-
-								scanner := bufio.NewScanner(cmdReader)
-
-								for scanner.Scan() {
-
-									// Keep track of visited URL(s)
-									visited = append(visited, scanner.Text())
-
-								}
-								// Intercept the request and scan each parameter
-								scan.InterceptAndScan(ctx.Req, payloadList, templates, *config, silent, out)
-
-							} else {
-								// Intercept the request and scan each parameter
-								scan.InterceptAndScan(ctx.Req, payloadList, templates, *config, silent, out)
-							}
-						}
-
-					} else {
-
-						// Only visit links once
-						if !Contains(visited, ctx.Req.URL.String()) &&
-							!Contains(config.Request.Exclude, ctx.Req.URL.String()) {
-
-							if tool != "" {
-
-								// If command is specified then run it first
-								cmd := exec.Command("/bin/bash", "-c", "echo "+ctx.Req.URL.String()+" | "+tool)
-								cmdReader, _ := cmd.StdoutPipe()
-
-								scanner := bufio.NewScanner(cmdReader)
-
-								for scanner.Scan() {
-
-									// Keep track of visited URL(s)
-									visited = append(visited, scanner.Text())
-
-								}
-								// Intercept the request and scan each parameter
-								scan.InterceptAndScan(ctx.Req, payloadList, templates, *config, silent, out)
-
-							} else {
-								// Intercept the request and scan each parameter
-								scan.InterceptAndScan(ctx.Req, payloadList, templates, *config, silent, out)
-							}
-						}
-
-					}
-
-					// Start crawling through each link Visited
-					if crawl == true {
-
-						// Find and visit all links
-						c.OnHTML("a[href]", func(e *colly.HTMLElement) {
-							link := e.Attr("href")
-							e.Request.Visit(e.Request.AbsoluteURL(link))
-						})
-
-						// The request of each link visisted
-						c.OnRequest(func(r *colly.Request) {
-							if config.Request.Parameters == true {
-
-								// Check if the Url contains parameters
-								params, _ := url.Parse(r.URL.String())
-								if len(params.Query()) > 0 {
-
-									// Only visit inscope items once
-									if strings.ContainsAny(r.URL.String(), scope) &&
-										!Contains(visited, r.URL.String()) &&
-										!Contains(config.Request.Exclude, r.URL.String()) {
-
-										if tool != "" {
-
-											// If command is specified then run it first
-											cmd := exec.Command("/bin/bash", "-c", "echo "+r.URL.String()+" | "+tool)
-											cmdReader, _ := cmd.StdoutPipe()
-
-											scanner := bufio.NewScanner(cmdReader)
-
-											for scanner.Scan() {
-
-												// Keep track of visited URL(s)
-												visited = append(visited, scanner.Text())
-
-											}
-											// Crawl and scan
-											scan.CrawlAndScan(r, payloadList, templates, *config, silent, out)
-
-										} else {
-											// Crawl and scan
-											scan.CrawlAndScan(r, payloadList, templates, *config, silent, out)
-										}
-									}
-								}
-
-							} else {
-
-								// Only visit inscope items once
-								if strings.ContainsAny(r.URL.String(), scope) &&
-									!Contains(visited, r.URL.String()) &&
-									!Contains(config.Request.Exclude, r.URL.String()) {
-									if tool != "" {
-
-										// If command is specified then run it first
-										cmd := exec.Command("/bin/bash", "-c", "echo "+r.URL.String()+" | "+tool)
-										cmdReader, _ := cmd.StdoutPipe()
-
-										scanner := bufio.NewScanner(cmdReader)
-
-										for scanner.Scan() {
-
-											// Keep track of visited URL(s)
-											visited = append(visited, scanner.Text())
-
-										}
-										// Crawl and scan
-										scan.CrawlAndScan(r, payloadList, templates, *config, silent, out)
-
-									} else {
-										// Crawl and scan
-										scan.CrawlAndScan(r, payloadList, templates, *config, silent, out)
-									}
-								}
-							}
-
-						})
-
-						c.Visit(ctx.Req.URL.String())
 					}
 
 				} else {
 
-					if config.Request.Parameters == true {
-						// Check if the Url contains parameters
-						params, _ := url.Parse(r.URL.String())
+					// Only visit links once
+					if Contains(visited, ctx.Req.URL.String()) == false &&
+						Contains(config.Request.Exclude, ctx.Req.URL.String()) == false {
 
-						if len(params.Query()) > 0 &&
-							!Contains(visited, r.URL.String()) &&
-							!Contains(config.Request.Exclude, r.URL.String()) {
-							if tool != "" {
-
-								// If command is specified then run it first
-								cmd := exec.Command("/bin/bash", "-c", "echo "+ctx.Req.URL.String()+" | "+tool)
-								cmdReader, _ := cmd.StdoutPipe()
-
-								scanner := bufio.NewScanner(cmdReader)
-
-								for scanner.Scan() {
-
-									// Keep track of visited URL(s)
-									visited = append(visited, scanner.Text())
-
-								}
-								// Intercept the request and scan each parameter
-								scan.InterceptAndScan(ctx.Req, payloadList, templates, *config, silent, out)
-
-							} else {
-								// Intercept the request and scan each parameter
-								scan.InterceptAndScan(ctx.Req, payloadList, templates, *config, silent, out)
-							}
-						}
-
-					} else {
-
-						// Only visit links once
-						if !Contains(visited, r.URL.String()) {
-
-							if tool != "" {
-
-								// If command is specified then run it first
-								cmd := exec.Command("/bin/bash", "-c", "echo "+ctx.Req.URL.String()+" | "+tool)
-								cmdReader, _ := cmd.StdoutPipe()
-
-								scanner := bufio.NewScanner(cmdReader)
-
-								for scanner.Scan() {
-
-									// Keep track of visited URL(s)
-									visited = append(visited, scanner.Text())
-
-								}
-								// Intercept the request and scan each parameter
-								scan.InterceptAndScan(ctx.Req, payloadList, templates, *config, silent, out)
-
-							} else {
-								// Intercept the request and scan each parameter
-								scan.InterceptAndScan(ctx.Req, payloadList, templates, *config, silent, out)
-							}
-						}
+						// Intercept the request and scan each parameter
+						scan.InterceptAndScan(ctx.Req, payloadList, templates, *config, silent, out)
 					}
 
-					// Start crawling through each link Visited
-					if crawl == true {
-
-						// Find and visit all links
-						c.OnHTML("a[href]", func(e *colly.HTMLElement) {
-							link := e.Attr("href")
-							e.Request.Visit(e.Request.AbsoluteURL(link))
-						})
-
-						// The request of each link visisted
-						c.OnRequest(func(r *colly.Request) {
-							if config.Request.Parameters == true {
-
-								// Check if the Url contains parameters
-								params, _ := url.Parse(r.URL.String())
-								if len(params.Query()) > 0 &&
-									!Contains(visited, r.URL.String()) &&
-									!Contains(config.Request.Exclude, r.URL.String()) {
-
-									if tool != "" {
-
-										// If command is specified then run it first
-										cmd := exec.Command("/bin/bash", "-c", "echo "+r.URL.String()+" | "+tool)
-										cmdReader, _ := cmd.StdoutPipe()
-
-										scanner := bufio.NewScanner(cmdReader)
-
-										for scanner.Scan() {
-
-											// Keep track of visited URL(s)
-											visited = append(visited, scanner.Text())
-
-										}
-										// Crawl and scan
-										scan.CrawlAndScan(r, payloadList, templates, *config, silent, out)
-
-									} else {
-										// Crawl and scan
-										scan.CrawlAndScan(r, payloadList, templates, *config, silent, out)
-									}
-								}
-
-							} else {
-
-								// Only visit links once
-								if !Contains(visited, r.URL.String()) &&
-									!Contains(config.Request.Exclude, r.URL.String()) {
-
-									if tool != "" {
-
-										// If command is specified then run it first
-										cmd := exec.Command("/bin/bash", "-c", "echo "+r.URL.String()+" | "+tool)
-										cmdReader, _ := cmd.StdoutPipe()
-
-										scanner := bufio.NewScanner(cmdReader)
-
-										for scanner.Scan() {
-
-											// Keep track of visited URL(s)
-											visited = append(visited, scanner.Text())
-
-										}
-										// Crawl and scan
-										scan.CrawlAndScan(r, payloadList, templates, *config, silent, out)
-
-									} else {
-										// Crawl and scan
-										scan.CrawlAndScan(r, payloadList, templates, *config, silent, out)
-									}
-								}
-
-							}
-
-						})
-
-						c.Visit(ctx.Req.URL.String())
-					}
 				}
 
+				// Start crawling through each link Visited
+				if crawl == true {
+
+					// Find and visit all links
+					c.OnHTML("a[href]", func(e *colly.HTMLElement) {
+						link := e.Attr("href")
+						e.Request.Visit(e.Request.AbsoluteURL(link))
+					})
+
+					// The request of each link visisted
+					c.OnRequest(func(r *colly.Request) {
+						if config.Request.Parameters == true {
+
+							// Check if the Url contains parameters
+							params, _ := url.Parse(r.URL.String())
+							if len(params.Query()) > 0 {
+
+								// Only visit inscope items once
+								if strings.ContainsAny(r.URL.String(), scope) &&
+									Contains(visited, r.URL.String()) == false &&
+									Contains(config.Request.Exclude, r.URL.String()) == false {
+									// Crawl and scan
+									scan.CrawlAndScan(r, payloadList, templates, *config, silent, out)
+								}
+							}
+
+						} else {
+
+							// Only visit inscope items once
+							if strings.ContainsAny(r.URL.String(), scope) &&
+								Contains(visited, r.URL.String()) == false &&
+								Contains(config.Request.Exclude, r.URL.String()) == false {
+								// Crawl and scan
+								scan.CrawlAndScan(r, payloadList, templates, *config, silent, out)
+							}
+						}
+
+					})
+					c.Visit(ctx.Req.URL.String())
+				}
 				return r, nil
 			})
 
@@ -563,30 +343,11 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 
 											// Only visit inscope items once
 											if strings.ContainsAny(r.URL.String(), scope) &&
-												!Contains(visited, r.URL.String()) &&
-												!Contains(config.Request.Exclude, r.URL.String()) {
+												Contains(visited, r.URL.String()) == false &&
+												Contains(config.Request.Exclude, r.URL.String()) == false {
 
-												if tool != "" {
-
-													// If command is specified then run it first
-													cmd := exec.Command("/bin/bash", "-c", "echo "+r.URL.String()+" | "+tool)
-													cmdReader, _ := cmd.StdoutPipe()
-
-													scanner := bufio.NewScanner(cmdReader)
-
-													for scanner.Scan() {
-
-														// Keep track of visited URL(s)
-														visited = append(visited, scanner.Text())
-
-													}
-													// Crawl and scan
-													scan.CrawlAndScan(r, payloadList, template, *config, silent, out)
-
-												} else {
-													// Crawl and scan
-													scan.CrawlAndScan(r, payloadList, template, *config, silent, out)
-												}
+												// Crawl and scan
+												scan.CrawlAndScan(r, payloadList, template, *config, silent, out)
 											}
 										}
 
@@ -594,29 +355,10 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 
 										// Only visit inscope items once
 										if strings.ContainsAny(r.URL.String(), scope) &&
-											!Contains(visited, r.URL.String()) &&
-											!Contains(config.Request.Exclude, r.URL.String()) {
-											if tool != "" {
-
-												// If command is specified then run it first
-												cmd := exec.Command("/bin/bash", "-c", "echo "+r.URL.String()+" | "+tool)
-												cmdReader, _ := cmd.StdoutPipe()
-
-												scanner := bufio.NewScanner(cmdReader)
-
-												for scanner.Scan() {
-
-													// Keep track of visited URL(s)
-													visited = append(visited, scanner.Text())
-
-												}
-												// Crawl and scan
-												scan.CrawlAndScan(r, payloadList, template, *config, silent, out)
-
-											} else {
-												// Crawl and scan
-												scan.CrawlAndScan(r, payloadList, template, *config, silent, out)
-											}
+											Contains(visited, r.URL.String()) == false &&
+											Contains(config.Request.Exclude, r.URL.String()) == false {
+											// Crawl and scan
+											scan.CrawlAndScan(r, payloadList, template, *config, silent, out)
 										}
 									}
 
@@ -674,8 +416,8 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 
 									// Only visit inscope items once
 									if strings.ContainsAny(r.URL.String(), scope) &&
-										!Contains(visited, r.URL.String()) &&
-										!Contains(config.Request.Exclude, r.URL.String()) {
+										Contains(visited, r.URL.String()) == false &&
+										Contains(config.Request.Exclude, r.URL.String()) == false {
 
 										if tool != "" {
 
@@ -705,8 +447,8 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 
 								// Only visit inscope items once
 								if strings.ContainsAny(r.URL.String(), scope) &&
-									!Contains(visited, r.URL.String()) &&
-									!Contains(config.Request.Exclude, r.URL.String()) {
+									Contains(visited, r.URL.String()) == false &&
+									Contains(config.Request.Exclude, r.URL.String()) == false {
 									if tool != "" {
 
 										// If command is specified then run it first
@@ -806,8 +548,8 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 
 											// Only visit inscope items once
 											if strings.ContainsAny(r.URL.String(), scope) &&
-												!Contains(visited, r.URL.String()) &&
-												!Contains(config.Request.Exclude, r.URL.String()) {
+												Contains(visited, r.URL.String()) == false &&
+												Contains(config.Request.Exclude, r.URL.String()) == false {
 
 												if tool != "" {
 
@@ -837,8 +579,8 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 
 										// Only visit inscope items once
 										if strings.ContainsAny(r.URL.String(), scope) &&
-											!Contains(visited, r.URL.String()) &&
-											!Contains(config.Request.Exclude, r.URL.String()) {
+											Contains(visited, r.URL.String()) == false &&
+											Contains(config.Request.Exclude, r.URL.String()) == false {
 											if tool != "" {
 
 												// If command is specified then run it first
@@ -927,8 +669,8 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 
 									// Only visit inscope items once
 									if strings.ContainsAny(r.URL.String(), scope) &&
-										!Contains(visited, r.URL.String()) &&
-										!Contains(config.Request.Exclude, r.URL.String()) {
+										Contains(visited, r.URL.String()) == false &&
+										Contains(config.Request.Exclude, r.URL.String()) == false {
 
 										if tool != "" {
 
@@ -958,8 +700,8 @@ func Scanner(parseBurp string, templates string, silent bool, threads int, out s
 
 								// Only visit inscope items once
 								if strings.ContainsAny(r.URL.String(), scope) &&
-									!Contains(visited, r.URL.String()) &&
-									!Contains(config.Request.Exclude, r.URL.String()) {
+									Contains(visited, r.URL.String()) == false &&
+									Contains(config.Request.Exclude, r.URL.String()) == false {
 									if tool != "" {
 
 										// If command is specified then run it first

@@ -111,13 +111,13 @@ This will display help for the tool. Here are all the switches it supports.
 <summary> 👉 erebus help menu 👈</summary>
 
 ```
-Usage of ./erebus:
+Usage of erebus:
   -burp-sitemap string
         scan burp xml sitemap (without base64 decoded)
   -c int
         the number of concurrent requsts (default 100)
   -crawl
-        crawl through each intercepted request (default true)
+        crawl through each intercepted request
   -depth int
         the crawl depth (default 5)
   -interceptor
@@ -136,6 +136,8 @@ Usage of ./erebus:
         use the templates with all our yaml rules instead
   -tc string
         Use other tools by executing an os command (default "qsreplace")
+  -ut
+        Install or update the erebus-templates
 ```
 
 </details>

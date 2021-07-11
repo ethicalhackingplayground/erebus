@@ -103,21 +103,22 @@ func DetectVulnerabilitiesWhileIntercepting(request *http.Request, payload strin
 								info := color.New(color.FgBlue, color.Bold).SprintFunc()
 								white := color.New(color.FgWhite, color.Bold).SprintFunc()
 								green := color.New(color.FgGreen, color.Bold).SprintFunc()
+								yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 								switch config.Template.Severity {
 								case "critical":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(request.URL.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), red(config.Template.Severity))
 									break
 								case "high":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(request.URL.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), normal(config.Template.Severity))
 									break
 								case "medium":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(request.URL.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), medium(config.Template.Severity))
 									break
 								case "low":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(request.URL.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), low(config.Template.Severity))
 									break
 								case "info":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(request.URL.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), info(config.Template.Severity))
 									break
 								}
 							}
@@ -145,9 +146,30 @@ func DetectVulnerabilitiesWhileIntercepting(request *http.Request, payload strin
 									}
 
 									red := color.New(color.FgRed, color.Bold).SprintFunc()
+									normal := color.New(color.FgMagenta, color.Bold).SprintFunc()
+									medium := color.New(color.FgYellow, color.Bold).SprintFunc()
+									low := color.New(color.FgGreen, color.Bold).SprintFunc()
+									info := color.New(color.FgBlue, color.Bold).SprintFunc()
 									white := color.New(color.FgWhite, color.Bold).SprintFunc()
 									green := color.New(color.FgGreen, color.Bold).SprintFunc()
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("VULN"), white(query), white(http.StatusText(resp.StatusCode)))
+									yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
+									switch config.Template.Severity {
+									case "critical":
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(request.URL.String()), red(config.Template.Severity))
+										break
+									case "high":
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(request.URL.String()), normal(config.Template.Severity))
+										break
+									case "medium":
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(request.URL.String()), medium(config.Template.Severity))
+										break
+									case "low":
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(request.URL.String()), low(config.Template.Severity))
+										break
+									case "info":
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(request.URL.String()), info(config.Template.Severity))
+										break
+									}
 								}
 							} else {
 
@@ -178,21 +200,22 @@ func DetectVulnerabilitiesWhileIntercepting(request *http.Request, payload strin
 							info := color.New(color.FgBlue, color.Bold).SprintFunc()
 							white := color.New(color.FgWhite, color.Bold).SprintFunc()
 							green := color.New(color.FgGreen, color.Bold).SprintFunc()
+							yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 							switch config.Template.Severity {
 							case "critical":
-								fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(query), white(http.StatusText(resp.StatusCode)))
+								fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), red(config.Template.Severity))
 								break
 							case "high":
-								fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(query), white(http.StatusText(resp.StatusCode)))
+								fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), normal(config.Template.Severity))
 								break
 							case "medium":
-								fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(query), white(http.StatusText(resp.StatusCode)))
+								fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), medium(config.Template.Severity))
 								break
 							case "low":
-								fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(query), white(http.StatusText(resp.StatusCode)))
+								fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), low(config.Template.Severity))
 								break
 							case "info":
-								fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(query), white(http.StatusText(resp.StatusCode)))
+								fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), info(config.Template.Severity))
 								break
 							}
 						}
@@ -230,21 +253,22 @@ func DetectVulnerabilitiesWhileIntercepting(request *http.Request, payload strin
 								info := color.New(color.FgBlue, color.Bold).SprintFunc()
 								white := color.New(color.FgWhite, color.Bold).SprintFunc()
 								green := color.New(color.FgGreen, color.Bold).SprintFunc()
+								yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 								switch config.Template.Severity {
 								case "critical":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(query), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), red(config.Template.Severity))
 									break
 								case "high":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(query), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), normal(config.Template.Severity))
 									break
 								case "medium":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(query), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), medium(config.Template.Severity))
 									break
 								case "low":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(query), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), low(config.Template.Severity))
 									break
 								case "info":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(query), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), info(config.Template.Severity))
 									break
 								}
 							}
@@ -279,21 +303,22 @@ func DetectVulnerabilitiesWhileIntercepting(request *http.Request, payload strin
 								info := color.New(color.FgBlue, color.Bold).SprintFunc()
 								white := color.New(color.FgWhite, color.Bold).SprintFunc()
 								green := color.New(color.FgGreen, color.Bold).SprintFunc()
+								yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 								switch config.Template.Severity {
 								case "critical":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(query), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), red(config.Template.Severity))
 									break
 								case "high":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(query), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), normal(config.Template.Severity))
 									break
 								case "medium":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(query), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), medium(config.Template.Severity))
 									break
 								case "low":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(query), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), low(config.Template.Severity))
 									break
 								case "info":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(query), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), info(config.Template.Severity))
 									break
 								}
 							}
@@ -363,24 +388,24 @@ func DetectVulnerabilitiesWhileIntercepting(request *http.Request, payload strin
 								info := color.New(color.FgBlue, color.Bold).SprintFunc()
 								white := color.New(color.FgWhite, color.Bold).SprintFunc()
 								green := color.New(color.FgGreen, color.Bold).SprintFunc()
+								yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 								switch config.Template.Severity {
 								case "critical":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(normal("FORM ")+request.URL.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(normal("FORM ")+request.URL.String()), red(config.Template.Severity))
 									break
 								case "high":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(normal("FORM ")+request.URL.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(normal("FORM ")+request.URL.String()), normal(config.Template.Severity))
 									break
 								case "medium":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(normal("FORM ")+request.URL.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(normal("FORM ")+request.URL.String()), medium(config.Template.Severity))
 									break
 								case "low":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(normal("FORM ")+request.URL.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(normal("FORM ")+request.URL.String()), low(config.Template.Severity))
 									break
 								case "info":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(normal("FORM ")+request.URL.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(normal("FORM ")+request.URL.String()), info(config.Template.Severity))
 									break
 								}
-
 							}
 						} else {
 
@@ -412,21 +437,22 @@ func DetectVulnerabilitiesWhileIntercepting(request *http.Request, payload strin
 									info := color.New(color.FgBlue, color.Bold).SprintFunc()
 									white := color.New(color.FgWhite, color.Bold).SprintFunc()
 									green := color.New(color.FgGreen, color.Bold).SprintFunc()
+									yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 									switch config.Template.Severity {
 									case "critical":
-										fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(normal("FORM ")+request.URL.String()), white(http.StatusText(resp.StatusCode)))
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(normal("FORM ")+request.URL.String()), red(config.Template.Severity))
 										break
 									case "high":
-										fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(normal("FORM ")+request.URL.String()), white(http.StatusText(resp.StatusCode)))
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(normal("FORM ")+request.URL.String()), normal(config.Template.Severity))
 										break
 									case "medium":
-										fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(normal("FORM ")+request.URL.String()), white(http.StatusText(resp.StatusCode)))
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(normal("FORM ")+request.URL.String()), medium(config.Template.Severity))
 										break
 									case "low":
-										fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(normal("FORM ")+request.URL.String()), white(http.StatusText(resp.StatusCode)))
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(normal("FORM ")+request.URL.String()), low(config.Template.Severity))
 										break
 									case "info":
-										fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(normal("FORM ")+request.URL.String()), white(http.StatusText(resp.StatusCode)))
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(normal("FORM ")+request.URL.String()), info(config.Template.Severity))
 										break
 									}
 								}
@@ -460,21 +486,22 @@ func DetectVulnerabilitiesWhileIntercepting(request *http.Request, payload strin
 							info := color.New(color.FgBlue, color.Bold).SprintFunc()
 							white := color.New(color.FgWhite, color.Bold).SprintFunc()
 							green := color.New(color.FgGreen, color.Bold).SprintFunc()
+							yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 							switch config.Template.Severity {
 							case "critical":
-								fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(normal("FORM ")+request.URL.String()), white(http.StatusText(resp.StatusCode)))
+								fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(normal("FORM ")+request.URL.String()), red(config.Template.Severity))
 								break
 							case "high":
-								fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(normal("FORM ")+request.URL.String()), white(http.StatusText(resp.StatusCode)))
+								fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(normal("FORM ")+request.URL.String()), normal(config.Template.Severity))
 								break
 							case "medium":
-								fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(normal("FORM ")+request.URL.String()), white(http.StatusText(resp.StatusCode)))
+								fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(normal("FORM ")+request.URL.String()), medium(config.Template.Severity))
 								break
 							case "low":
-								fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(normal("FORM ")+request.URL.String()), white(http.StatusText(resp.StatusCode)))
+								fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(normal("FORM ")+request.URL.String()), low(config.Template.Severity))
 								break
 							case "info":
-								fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(normal("FORM ")+request.URL.String()), white(http.StatusText(resp.StatusCode)))
+								fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(normal("FORM ")+request.URL.String()), info(config.Template.Severity))
 								break
 							}
 						}
@@ -512,21 +539,22 @@ func DetectVulnerabilitiesWhileIntercepting(request *http.Request, payload strin
 								info := color.New(color.FgBlue, color.Bold).SprintFunc()
 								white := color.New(color.FgWhite, color.Bold).SprintFunc()
 								green := color.New(color.FgGreen, color.Bold).SprintFunc()
+								yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 								switch config.Template.Severity {
 								case "critical":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(normal("FORM ")+request.URL.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(normal("FORM ")+request.URL.String()), red(config.Template.Severity))
 									break
 								case "high":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(normal("FORM ")+request.URL.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(normal("FORM ")+request.URL.String()), normal(config.Template.Severity))
 									break
 								case "medium":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(normal("FORM ")+request.URL.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(normal("FORM ")+request.URL.String()), medium(config.Template.Severity))
 									break
 								case "low":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(normal("FORM ")+request.URL.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(normal("FORM ")+request.URL.String()), low(config.Template.Severity))
 									break
 								case "info":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(normal("FORM ")+request.URL.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(normal("FORM ")+request.URL.String()), info(config.Template.Severity))
 									break
 								}
 							}
@@ -561,21 +589,22 @@ func DetectVulnerabilitiesWhileIntercepting(request *http.Request, payload strin
 								info := color.New(color.FgBlue, color.Bold).SprintFunc()
 								white := color.New(color.FgWhite, color.Bold).SprintFunc()
 								green := color.New(color.FgGreen, color.Bold).SprintFunc()
+								yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 								switch config.Template.Severity {
 								case "critical":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(normal("FORM ")+request.URL.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(normal("FORM ")+request.URL.String()), red(config.Template.Severity))
 									break
 								case "high":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(normal("FORM ")+request.URL.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(normal("FORM ")+request.URL.String()), normal(config.Template.Severity))
 									break
 								case "medium":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(normal("FORM ")+request.URL.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(normal("FORM ")+request.URL.String()), medium(config.Template.Severity))
 									break
 								case "low":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(normal("FORM ")+request.URL.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(normal("FORM ")+request.URL.String()), low(config.Template.Severity))
 									break
 								case "info":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(normal("FORM ")+request.URL.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(normal("FORM ")+request.URL.String()), info(config.Template.Severity))
 									break
 								}
 							}
@@ -665,21 +694,22 @@ func DetectVulnerabilitiesWhileCrawling(request *colly.Request, payload string, 
 								info := color.New(color.FgBlue, color.Bold).SprintFunc()
 								white := color.New(color.FgWhite, color.Bold).SprintFunc()
 								green := color.New(color.FgGreen, color.Bold).SprintFunc()
+								yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 								switch config.Template.Severity {
 								case "critical":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(query), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), red(config.Template.Severity))
 									break
 								case "high":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(query), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), normal(config.Template.Severity))
 									break
 								case "medium":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(query), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), medium(config.Template.Severity))
 									break
 								case "low":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(query), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), low(config.Template.Severity))
 									break
 								case "info":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(query), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), info(config.Template.Severity))
 									break
 								}
 							}
@@ -707,9 +737,30 @@ func DetectVulnerabilitiesWhileCrawling(request *colly.Request, payload string, 
 									}
 
 									red := color.New(color.FgRed, color.Bold).SprintFunc()
+									normal := color.New(color.FgMagenta, color.Bold).SprintFunc()
+									medium := color.New(color.FgYellow, color.Bold).SprintFunc()
+									low := color.New(color.FgGreen, color.Bold).SprintFunc()
+									info := color.New(color.FgBlue, color.Bold).SprintFunc()
 									white := color.New(color.FgWhite, color.Bold).SprintFunc()
 									green := color.New(color.FgGreen, color.Bold).SprintFunc()
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("VULN"), white(query), white(http.StatusText(resp.StatusCode)))
+									yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
+									switch config.Template.Severity {
+									case "critical":
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), red(config.Template.Severity))
+										break
+									case "high":
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), normal(config.Template.Severity))
+										break
+									case "medium":
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), medium(config.Template.Severity))
+										break
+									case "low":
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), low(config.Template.Severity))
+										break
+									case "info":
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), info(config.Template.Severity))
+										break
+									}
 								}
 							} else {
 
@@ -733,6 +784,7 @@ func DetectVulnerabilitiesWhileCrawling(request *colly.Request, payload string, 
 							if out != "" {
 								WriteResults(out, u.String())
 							}
+
 							red := color.New(color.FgRed, color.Bold).SprintFunc()
 							normal := color.New(color.FgMagenta, color.Bold).SprintFunc()
 							medium := color.New(color.FgYellow, color.Bold).SprintFunc()
@@ -740,21 +792,22 @@ func DetectVulnerabilitiesWhileCrawling(request *colly.Request, payload string, 
 							info := color.New(color.FgBlue, color.Bold).SprintFunc()
 							white := color.New(color.FgWhite, color.Bold).SprintFunc()
 							green := color.New(color.FgGreen, color.Bold).SprintFunc()
+							yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 							switch config.Template.Severity {
 							case "critical":
-								fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(query), white(http.StatusText(resp.StatusCode)))
+								fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), red(config.Template.Severity))
 								break
 							case "high":
-								fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(query), white(http.StatusText(resp.StatusCode)))
+								fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), normal(config.Template.Severity))
 								break
 							case "medium":
-								fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(query), white(http.StatusText(resp.StatusCode)))
+								fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), medium(config.Template.Severity))
 								break
 							case "low":
-								fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(query), white(http.StatusText(resp.StatusCode)))
+								fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), low(config.Template.Severity))
 								break
 							case "info":
-								fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(query), white(http.StatusText(resp.StatusCode)))
+								fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), info(config.Template.Severity))
 								break
 							}
 						}
@@ -792,21 +845,22 @@ func DetectVulnerabilitiesWhileCrawling(request *colly.Request, payload string, 
 								info := color.New(color.FgBlue, color.Bold).SprintFunc()
 								white := color.New(color.FgWhite, color.Bold).SprintFunc()
 								green := color.New(color.FgGreen, color.Bold).SprintFunc()
+								yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 								switch config.Template.Severity {
 								case "critical":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(query), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), red(config.Template.Severity))
 									break
 								case "high":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(query), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), normal(config.Template.Severity))
 									break
 								case "medium":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(query), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), medium(config.Template.Severity))
 									break
 								case "low":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(query), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), low(config.Template.Severity))
 									break
 								case "info":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(query), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), info(config.Template.Severity))
 									break
 								}
 							}
@@ -841,21 +895,22 @@ func DetectVulnerabilitiesWhileCrawling(request *colly.Request, payload string, 
 								info := color.New(color.FgBlue, color.Bold).SprintFunc()
 								white := color.New(color.FgWhite, color.Bold).SprintFunc()
 								green := color.New(color.FgGreen, color.Bold).SprintFunc()
+								yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 								switch config.Template.Severity {
 								case "critical":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(query), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), red(config.Template.Severity))
 									break
 								case "high":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(query), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), normal(config.Template.Severity))
 									break
 								case "medium":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(query), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), medium(config.Template.Severity))
 									break
 								case "low":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(query), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), low(config.Template.Severity))
 									break
 								case "info":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(query), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), info(config.Template.Severity))
 									break
 								}
 							}
@@ -899,11 +954,15 @@ func DetectVulnerabilityWithTemplate(payload string, templates string, host stri
 				if err != nil {
 					return
 				}
+
 				if config.Request.Paths == "true" {
 
-					// Create a new Request
+					//
+					//TODO: Fix path issue
+					//
 					protocol := strings.Split(u.String(), ":")[0]
 					domain := strings.Split(u.String(), "/")[2]
+
 					req, err := http.NewRequest("GET", protocol+"://"+domain+"/"+payload, nil)
 					if err != nil {
 						return
@@ -948,21 +1007,22 @@ func DetectVulnerabilityWithTemplate(payload string, templates string, host stri
 											info := color.New(color.FgBlue, color.Bold).SprintFunc()
 											white := color.New(color.FgWhite, color.Bold).SprintFunc()
 											green := color.New(color.FgGreen, color.Bold).SprintFunc()
+											yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 											switch config.Template.Severity {
 											case "critical":
-												fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+												fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), red(config.Template.Severity))
 												break
 											case "high":
-												fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+												fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), normal(config.Template.Severity))
 												break
 											case "medium":
-												fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+												fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), medium(config.Template.Severity))
 												break
 											case "low":
-												fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+												fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), low(config.Template.Severity))
 												break
 											case "info":
-												fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+												fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), info(config.Template.Severity))
 												break
 											}
 										}
@@ -990,9 +1050,30 @@ func DetectVulnerabilityWithTemplate(payload string, templates string, host stri
 												}
 
 												red := color.New(color.FgRed, color.Bold).SprintFunc()
+												normal := color.New(color.FgMagenta, color.Bold).SprintFunc()
+												medium := color.New(color.FgYellow, color.Bold).SprintFunc()
+												low := color.New(color.FgGreen, color.Bold).SprintFunc()
+												info := color.New(color.FgBlue, color.Bold).SprintFunc()
 												white := color.New(color.FgWhite, color.Bold).SprintFunc()
 												green := color.New(color.FgGreen, color.Bold).SprintFunc()
-												fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("VULN"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+												yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
+												switch config.Template.Severity {
+												case "critical":
+													fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), red(config.Template.Severity))
+													break
+												case "high":
+													fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), normal(config.Template.Severity))
+													break
+												case "medium":
+													fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), medium(config.Template.Severity))
+													break
+												case "low":
+													fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), low(config.Template.Severity))
+													break
+												case "info":
+													fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), info(config.Template.Severity))
+													break
+												}
 											}
 										} else {
 
@@ -1024,21 +1105,22 @@ func DetectVulnerabilityWithTemplate(payload string, templates string, host stri
 										info := color.New(color.FgBlue, color.Bold).SprintFunc()
 										white := color.New(color.FgWhite, color.Bold).SprintFunc()
 										green := color.New(color.FgGreen, color.Bold).SprintFunc()
+										yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 										switch config.Template.Severity {
 										case "critical":
-											fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+											fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), red(config.Template.Severity))
 											break
 										case "high":
-											fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+											fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), normal(config.Template.Severity))
 											break
 										case "medium":
-											fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+											fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), medium(config.Template.Severity))
 											break
 										case "low":
-											fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+											fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), low(config.Template.Severity))
 											break
 										case "info":
-											fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+											fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), info(config.Template.Severity))
 											break
 										}
 									}
@@ -1076,21 +1158,22 @@ func DetectVulnerabilityWithTemplate(payload string, templates string, host stri
 											info := color.New(color.FgBlue, color.Bold).SprintFunc()
 											white := color.New(color.FgWhite, color.Bold).SprintFunc()
 											green := color.New(color.FgGreen, color.Bold).SprintFunc()
+											yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 											switch config.Template.Severity {
 											case "critical":
-												fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+												fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), red(config.Template.Severity))
 												break
 											case "high":
-												fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+												fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), normal(config.Template.Severity))
 												break
 											case "medium":
-												fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+												fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), medium(config.Template.Severity))
 												break
 											case "low":
-												fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+												fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), low(config.Template.Severity))
 												break
 											case "info":
-												fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+												fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), info(config.Template.Severity))
 												break
 											}
 										}
@@ -1122,21 +1205,22 @@ func DetectVulnerabilityWithTemplate(payload string, templates string, host stri
 										info := color.New(color.FgBlue, color.Bold).SprintFunc()
 										white := color.New(color.FgWhite, color.Bold).SprintFunc()
 										green := color.New(color.FgGreen, color.Bold).SprintFunc()
+										yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 										switch config.Template.Severity {
 										case "critical":
-											fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+											fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), red(config.Template.Severity))
 											break
 										case "high":
-											fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+											fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), normal(config.Template.Severity))
 											break
 										case "medium":
-											fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+											fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), medium(config.Template.Severity))
 											break
 										case "low":
-											fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+											fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), low(config.Template.Severity))
 											break
 										case "info":
-											fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+											fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), info(config.Template.Severity))
 											break
 										}
 									}
@@ -1210,21 +1294,22 @@ func DetectVulnerabilityWithTemplate(payload string, templates string, host stri
 											info := color.New(color.FgBlue, color.Bold).SprintFunc()
 											white := color.New(color.FgWhite, color.Bold).SprintFunc()
 											green := color.New(color.FgGreen, color.Bold).SprintFunc()
+											yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 											switch config.Template.Severity {
 											case "critical":
-												fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+												fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), red(config.Template.Severity))
 												break
 											case "high":
-												fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+												fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), normal(config.Template.Severity))
 												break
 											case "medium":
-												fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+												fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), medium(config.Template.Severity))
 												break
 											case "low":
-												fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+												fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), low(config.Template.Severity))
 												break
 											case "info":
-												fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+												fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), info(config.Template.Severity))
 												break
 											}
 										}
@@ -1258,21 +1343,22 @@ func DetectVulnerabilityWithTemplate(payload string, templates string, host stri
 												info := color.New(color.FgBlue, color.Bold).SprintFunc()
 												white := color.New(color.FgWhite, color.Bold).SprintFunc()
 												green := color.New(color.FgGreen, color.Bold).SprintFunc()
+												yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 												switch config.Template.Severity {
 												case "critical":
-													fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+													fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), red(config.Template.Severity))
 													break
 												case "high":
-													fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+													fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), normal(config.Template.Severity))
 													break
 												case "medium":
-													fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+													fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), medium(config.Template.Severity))
 													break
 												case "low":
-													fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+													fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), low(config.Template.Severity))
 													break
 												case "info":
-													fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+													fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), info(config.Template.Severity))
 													break
 												}
 											}
@@ -1306,21 +1392,22 @@ func DetectVulnerabilityWithTemplate(payload string, templates string, host stri
 										info := color.New(color.FgBlue, color.Bold).SprintFunc()
 										white := color.New(color.FgWhite, color.Bold).SprintFunc()
 										green := color.New(color.FgGreen, color.Bold).SprintFunc()
+										yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 										switch config.Template.Severity {
 										case "critical":
-											fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+											fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), red(config.Template.Severity))
 											break
 										case "high":
-											fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+											fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), normal(config.Template.Severity))
 											break
 										case "medium":
-											fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+											fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), medium(config.Template.Severity))
 											break
 										case "low":
-											fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+											fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), low(config.Template.Severity))
 											break
 										case "info":
-											fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+											fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), info(config.Template.Severity))
 											break
 										}
 									}
@@ -1358,21 +1445,22 @@ func DetectVulnerabilityWithTemplate(payload string, templates string, host stri
 											info := color.New(color.FgBlue, color.Bold).SprintFunc()
 											white := color.New(color.FgWhite, color.Bold).SprintFunc()
 											green := color.New(color.FgGreen, color.Bold).SprintFunc()
+											yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 											switch config.Template.Severity {
 											case "critical":
-												fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+												fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), red(config.Template.Severity))
 												break
 											case "high":
-												fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+												fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), normal(config.Template.Severity))
 												break
 											case "medium":
-												fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+												fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), medium(config.Template.Severity))
 												break
 											case "low":
-												fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+												fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), low(config.Template.Severity))
 												break
 											case "info":
-												fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+												fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), info(config.Template.Severity))
 												break
 											}
 										}
@@ -1407,21 +1495,22 @@ func DetectVulnerabilityWithTemplate(payload string, templates string, host stri
 											info := color.New(color.FgBlue, color.Bold).SprintFunc()
 											white := color.New(color.FgWhite, color.Bold).SprintFunc()
 											green := color.New(color.FgGreen, color.Bold).SprintFunc()
+											yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 											switch config.Template.Severity {
 											case "critical":
-												fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+												fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), red(config.Template.Severity))
 												break
 											case "high":
-												fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+												fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), normal(config.Template.Severity))
 												break
 											case "medium":
-												fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+												fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), medium(config.Template.Severity))
 												break
 											case "low":
-												fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+												fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), low(config.Template.Severity))
 												break
 											case "info":
-												fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+												fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), info(config.Template.Severity))
 												break
 											}
 										}
@@ -1502,21 +1591,22 @@ func DetectVulnerabilityWithTemplate(payload string, templates string, host stri
 									info := color.New(color.FgBlue, color.Bold).SprintFunc()
 									white := color.New(color.FgWhite, color.Bold).SprintFunc()
 									green := color.New(color.FgGreen, color.Bold).SprintFunc()
+									yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 									switch config.Template.Severity {
 									case "critical":
-										fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), red(config.Template.Severity))
 										break
 									case "high":
-										fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), normal(config.Template.Severity))
 										break
 									case "medium":
-										fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), medium(config.Template.Severity))
 										break
 									case "low":
-										fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), low(config.Template.Severity))
 										break
 									case "info":
-										fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), info(config.Template.Severity))
 										break
 									}
 								}
@@ -1550,21 +1640,22 @@ func DetectVulnerabilityWithTemplate(payload string, templates string, host stri
 										info := color.New(color.FgBlue, color.Bold).SprintFunc()
 										white := color.New(color.FgWhite, color.Bold).SprintFunc()
 										green := color.New(color.FgGreen, color.Bold).SprintFunc()
+										yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 										switch config.Template.Severity {
 										case "critical":
-											fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+											fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), red(config.Template.Severity))
 											break
 										case "high":
-											fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+											fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), normal(config.Template.Severity))
 											break
 										case "medium":
-											fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+											fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), medium(config.Template.Severity))
 											break
 										case "low":
-											fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+											fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), low(config.Template.Severity))
 											break
 										case "info":
-											fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+											fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), info(config.Template.Severity))
 											break
 										}
 									}
@@ -1597,21 +1688,22 @@ func DetectVulnerabilityWithTemplate(payload string, templates string, host stri
 								info := color.New(color.FgBlue, color.Bold).SprintFunc()
 								white := color.New(color.FgWhite, color.Bold).SprintFunc()
 								green := color.New(color.FgGreen, color.Bold).SprintFunc()
+								yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 								switch config.Template.Severity {
 								case "critical":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), red(config.Template.Severity))
 									break
 								case "high":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), normal(config.Template.Severity))
 									break
 								case "medium":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), medium(config.Template.Severity))
 									break
 								case "low":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), low(config.Template.Severity))
 									break
 								case "info":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), info(config.Template.Severity))
 									break
 								}
 							}
@@ -1649,21 +1741,22 @@ func DetectVulnerabilityWithTemplate(payload string, templates string, host stri
 									info := color.New(color.FgBlue, color.Bold).SprintFunc()
 									white := color.New(color.FgWhite, color.Bold).SprintFunc()
 									green := color.New(color.FgGreen, color.Bold).SprintFunc()
+									yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 									switch config.Template.Severity {
 									case "critical":
-										fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), red(config.Template.Severity))
 										break
 									case "high":
-										fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), normal(config.Template.Severity))
 										break
 									case "medium":
-										fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), medium(config.Template.Severity))
 										break
 									case "low":
-										fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), low(config.Template.Severity))
 										break
 									case "info":
-										fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), info(config.Template.Severity))
 										break
 									}
 								}
@@ -1694,21 +1787,22 @@ func DetectVulnerabilityWithTemplate(payload string, templates string, host stri
 								info := color.New(color.FgBlue, color.Bold).SprintFunc()
 								white := color.New(color.FgWhite, color.Bold).SprintFunc()
 								green := color.New(color.FgGreen, color.Bold).SprintFunc()
+								yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 								switch config.Template.Severity {
 								case "critical":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), red(config.Template.Severity))
 									break
 								case "high":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), normal(config.Template.Severity))
 									break
 								case "medium":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), medium(config.Template.Severity))
 									break
 								case "low":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), low(config.Template.Severity))
 									break
 								case "info":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(u.String()), info(config.Template.Severity))
 									break
 								}
 							}
@@ -1774,6 +1868,7 @@ func DetectVulnerabilityWithTemplate(payload string, templates string, host stri
 									if out != "" {
 										WriteResults(out, u.String())
 									}
+
 									red := color.New(color.FgRed, color.Bold).SprintFunc()
 									normal := color.New(color.FgMagenta, color.Bold).SprintFunc()
 									medium := color.New(color.FgYellow, color.Bold).SprintFunc()
@@ -1781,21 +1876,22 @@ func DetectVulnerabilityWithTemplate(payload string, templates string, host stri
 									info := color.New(color.FgBlue, color.Bold).SprintFunc()
 									white := color.New(color.FgWhite, color.Bold).SprintFunc()
 									green := color.New(color.FgGreen, color.Bold).SprintFunc()
+									yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 									switch config.Template.Severity {
 									case "critical":
-										fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), red(config.Template.Severity))
 										break
 									case "high":
-										fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), normal(config.Template.Severity))
 										break
 									case "medium":
-										fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), medium(config.Template.Severity))
 										break
 									case "low":
-										fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), low(config.Template.Severity))
 										break
 									case "info":
-										fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), info(config.Template.Severity))
 										break
 									}
 								}
@@ -1829,21 +1925,22 @@ func DetectVulnerabilityWithTemplate(payload string, templates string, host stri
 										info := color.New(color.FgBlue, color.Bold).SprintFunc()
 										white := color.New(color.FgWhite, color.Bold).SprintFunc()
 										green := color.New(color.FgGreen, color.Bold).SprintFunc()
+										yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 										switch config.Template.Severity {
 										case "critical":
-											fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+											fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), red(config.Template.Severity))
 											break
 										case "high":
-											fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+											fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), normal(config.Template.Severity))
 											break
 										case "medium":
-											fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+											fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), medium(config.Template.Severity))
 											break
 										case "low":
-											fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+											fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), low(config.Template.Severity))
 											break
 										case "info":
-											fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+											fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), info(config.Template.Severity))
 											break
 										}
 									}
@@ -1877,21 +1974,22 @@ func DetectVulnerabilityWithTemplate(payload string, templates string, host stri
 								info := color.New(color.FgBlue, color.Bold).SprintFunc()
 								white := color.New(color.FgWhite, color.Bold).SprintFunc()
 								green := color.New(color.FgGreen, color.Bold).SprintFunc()
+								yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 								switch config.Template.Severity {
 								case "critical":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), red(config.Template.Severity))
 									break
 								case "high":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), normal(config.Template.Severity))
 									break
 								case "medium":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), medium(config.Template.Severity))
 									break
 								case "low":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), low(config.Template.Severity))
 									break
 								case "info":
-									fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+									fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), info(config.Template.Severity))
 									break
 								}
 							}
@@ -1929,21 +2027,22 @@ func DetectVulnerabilityWithTemplate(payload string, templates string, host stri
 									info := color.New(color.FgBlue, color.Bold).SprintFunc()
 									white := color.New(color.FgWhite, color.Bold).SprintFunc()
 									green := color.New(color.FgGreen, color.Bold).SprintFunc()
+									yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 									switch config.Template.Severity {
 									case "critical":
-										fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), red(config.Template.Severity))
 										break
 									case "high":
-										fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), normal(config.Template.Severity))
 										break
 									case "medium":
-										fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), medium(config.Template.Severity))
 										break
 									case "low":
-										fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), low(config.Template.Severity))
 										break
 									case "info":
-										fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), info(config.Template.Severity))
 										break
 									}
 								}
@@ -1978,21 +2077,22 @@ func DetectVulnerabilityWithTemplate(payload string, templates string, host stri
 									info := color.New(color.FgBlue, color.Bold).SprintFunc()
 									white := color.New(color.FgWhite, color.Bold).SprintFunc()
 									green := color.New(color.FgGreen, color.Bold).SprintFunc()
+									yellow := color.New(color.FgYellow, color.Bold).SprintFunc()
 									switch config.Template.Severity {
 									case "critical":
-										fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), red("critical"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), red(config.Template.Severity))
 										break
 									case "high":
-										fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), normal("high"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), normal(config.Template.Severity))
 										break
 									case "medium":
-										fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), medium("medium"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), medium(config.Template.Severity))
 										break
 									case "low":
-										fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), low("low"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), low(config.Template.Severity))
 										break
 									case "info":
-										fmt.Printf("[%s] [%s] %s [%s]\n", green(templates), info("info"), white(u.String()), white(http.StatusText(resp.StatusCode)))
+										fmt.Printf("[%s] %s (%s) %s [%s]\n", green(config.Template.Name), white(config.Template.Description), yellow(config.Template.Author), white(query), info(config.Template.Severity))
 										break
 									}
 								}

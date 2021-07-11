@@ -30,7 +30,7 @@ func Scan() {
 
 	flag.IntVar(&threads, "c", 100, "the number of concurrent requsts")
 	flag.StringVar(&templates, "t", "", "use the templates with all our yaml rules instead")
-	flag.StringVar(&tool, "tc", "qsreplace", "Use other tools by executing an os command")
+	flag.StringVar(&tool, "tc", "", "Use other tools by executing an os command")
 	flag.StringVar(&parseBurp, "burp-sitemap", "", "scan burp xml sitemap (without base64 decoded)")
 	flag.StringVar(&output, "o", "", "output results to a file")
 	flag.StringVar(&scope, "scope", "", "the scope for the proxy intercetor")

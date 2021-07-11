@@ -150,7 +150,7 @@ Here are a few examples on how to use the erebus scanner for part of your testin
 Scanning for XSS vulnerabilities using the intercepting proxy with all of paypal inscope while crawling on HTTP domains.
 
 ```sh
-▶ erebus -t erebus-templates/xss-reflected.yaml -interceptor -crawl
+▶ erebus -t erebus-templates/xss-reflected.yaml -interceptor -crawl -scope ".*.\.paypal.com"
 ```
 
 ### Intercept and Crawl on HTTPS
@@ -172,7 +172,7 @@ Scanning for XSS vulnerabilities across range of subdomains using subfinder and 
 Scan subdomains from a file in the format **https://** or **http://**
 
 ```sh
-▶ cat alive | erebus -t erebus-templates/xss-reflected.yaml
+▶ cat alive | gau | erebus -t erebus-templates/xss-reflected.yaml
 ```
 
 

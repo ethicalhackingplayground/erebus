@@ -63,7 +63,7 @@ You may use the `-ut` flag to update the nuclei templates at any time.
 
 Make sure to setup a proxy in your browser before you use the **erebus interceptor** for firefox go to 
 
-```
+```sh
 ▶ Settings ▶ General ▶ Network Settings ▶ Manual proxy configuration
 ```
 
@@ -73,7 +73,9 @@ type in **127.0.0.1** in HTTP Proxy then for the port type in **8080** make sure
 
 I have provided the certificates for you to use for **HTTPS** testing, all you need to do is install these by:
 
+```sh
 ▶ Settings ▶ Privacy & Security ▶ Certificates ▶ View Certificates ▶ Import ▶ 
+```
 
 Select the **.crt** file in the erebus directory and proceed by trusting and installing.
 
@@ -85,7 +87,7 @@ erebus -h
 
 This will display help for the tool. Here are all the switches it supports.
 
-```bash
+```sh
 Usage of erebus:
   -burp-sitemap string
         scan burp xml sitemap (without base64 decoded)

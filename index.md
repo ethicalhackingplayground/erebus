@@ -56,7 +56,7 @@ We have a [dedicated repository](https://github.com/ethicalhackingplayground/ere
 <tr>
 <td>  
 
-### Erebus Templates
+# Erebus Templates
 
 Erebus has had built-in support for automatic update/download templates (https://github.com/ethicalhackingplayground/erebus/releases/latest). [**Erebus-Templates**](https://github.com/ethicalhackingplayground/erebus-templates) project provides a community-contributed list of ready-to-use templates that can be used with part of your testing.
 
@@ -70,7 +70,7 @@ You may use the `-ut` flag to update the nuclei templates at any time.
 <tr>
 <td>  
 
-### Setup Erebus Interceptor
+# Setup Erebus Interceptor
 
 Make sure to setup a proxy in your browser before you use the **erebus interceptor** for firefox go to 
 
@@ -86,7 +86,7 @@ type in **127.0.0.1** in HTTP Proxy then for the port type in **8080** make sure
 <tr>
 <td> 
 
-### Install the SSL Certificates to use HTTPS
+# Install the SSL Certificates to use HTTPS
 
 I have provided the certificates for you to use for **HTTPS** testing, all you need to do is install these by:
 
@@ -99,7 +99,7 @@ Select the **.crt** file in the erebus directory and proceed by trusting and ins
 </table>
 
 
-### Usage
+# Usage
 
 ```sh
 erebus -h
@@ -147,7 +147,7 @@ Usage of erebus:
 
 Here are a few examples on how to use the erebus scanner for part of your testing.
 
-### Intercept and Crawl on HTTP
+# Intercept and Crawl on HTTP
 
 Scanning for XSS vulnerabilities using the intercepting proxy with all of paypal inscope while crawling on HTTP domains.
 
@@ -155,7 +155,7 @@ Scanning for XSS vulnerabilities using the intercepting proxy with all of paypal
 ▶ erebus -t erebus-templates/xss-reflected.yaml -interceptor -crawl -scope ".*.\.paypal.com"
 ```
 
-### Intercept and Crawl on HTTPS
+# Intercept and Crawl on HTTPS
 
 Scanning for XSS vulnerabilities using the intercepting proxy with all of paypal inscope while crawling on HTTPS domains.
 
@@ -163,7 +163,7 @@ Scanning for XSS vulnerabilities using the intercepting proxy with all of paypal
 ▶ erebus -t erebus-templates/xss-reflected.yaml -interceptor -crawl -secure -scope ".*.\.paypal.com"
 ```
 
-### Tool Chaining Usage
+# Tool Chaining Usage
 
 Scanning for XSS vulnerabilities across range of subdomains using subfinder and Gau
 
@@ -180,7 +180,7 @@ Scan subdomains from a file in the format **https://** or **http://**
 
 [![asciicast](https://asciinema.org/a/424487.svg)](https://asciinema.org/a/424487)
 
-### License
+# License
 
 Erebus is distributed under [GPL-3.0 License](https://github.com/ethicalhackingplayground/erebus/blob/main/LICENSE)
 
